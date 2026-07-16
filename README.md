@@ -84,4 +84,4 @@ SmartAnalytics allows users to:
 | Name | Course | 
 |------|--------|
 | SPRandhawa | B.Tech CSE |
-| Friend Name | B.Tech CSE | 
+| SUKHRAJ7483| B.Tech ECE| 
