@@ -78,3 +78,10 @@ SmartAnalytics allows users to:
 - Advanced filtering options  
 - Multi-user dashboards  
 - Cloud deployment  
+
+## 👨‍💻 Authors
+
+| Name | Course | 
+|------|--------|
+| SPRandhawa | B.Tech CSE |
+| Friend Name | B.Tech CSE | 
