@@ -1,4 +1,4 @@
-# 🚀 SmartAnalytics Dashboard
+# 🚀 SmartAnalytics 
 
 A powerful **Data Analytics Dashboard** built using **Django + Pandas + Chart.js** that transforms raw datasets (CSV/Excel) into meaningful insights with interactive visualizations.
 
