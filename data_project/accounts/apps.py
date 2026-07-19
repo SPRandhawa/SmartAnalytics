@@ -5,4 +5,4 @@ class AccountsConfig(AppConfig):
     name = 'accounts'
 
     def ready(self):
-        import data_project.accounts.signals   # ✅ THIS LINE IS IMPORTANT
+        import accounts.signals   # ✅ THIS LINE IS IMPORTANT
