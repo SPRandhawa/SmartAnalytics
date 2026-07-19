@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth import update_session_auth_hash
 from datetime import datetime
-from data_project.accounts.models import Profile
+from accounts.models import Profile
 from .models import UploadedDataset
 from django.contrib import messages
 import pandas as pd
