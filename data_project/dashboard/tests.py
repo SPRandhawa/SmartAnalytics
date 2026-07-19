@@ -1,6 +1,6 @@
 from django.test import SimpleTestCase
 from django.urls import resolve
-from dashboard import views
+from data_project.dashboard import views
 import numpy as np
 
 
