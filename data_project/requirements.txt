@@ -1,0 +1,9 @@
+﻿Django
+gunicorn
+whitenoise
+pandas
+numpy
+scikit-learn
+google-genai
+python-dotenv
+Pillow
