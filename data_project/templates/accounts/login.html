@@ -1,0 +1,402 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+     <style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: #0f172a;
+        color: #f1f5f9;
+        font-family: Arial, sans-serif;
+    }
+    /* NAVBAR BASE */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 150px;
+    padding: 0 60px;
+    background: #0f172a;
+    position: relative;
+}
+
+/* LEFT */
+.nav-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    height: 150px;
+    width: 150px;
+    object-fit: contain;
+    mix-blend-mode: screen;
+}
+
+/* CENTER MENU */
+.nav-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 34px;
+}
+
+/* DEFAULT LINK */
+.nav-center a {
+    text-decoration: none;
+    color: #94a3b8;
+    font-size: 24px;
+    font-weight: 500;
+    position: relative;
+    padding-bottom: 6px;
+    transition: all 0.3s ease;
+}
+
+/* HOVER → PURPLE */
+.nav-center a:hover {
+    color: #9b08c4;
+}
+
+/* UNDERLINE BASE (HIDDEN) */
+.nav-center a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0%;
+    height: 2px;
+    background: #9b08c4;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+/* HOVER UNDERLINE ANIMATION */
+.nav-center a:hover::after {
+    width: 100%;
+}
+/* RIGHT */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+html {
+    scroll-behavior: smooth;
+}
+/* FOOTER BASE */
+.footer {
+    background: #0f172a;
+    padding: 15px 80px 15px;
+    border-top: 1px solid rgba(148,163,184,0.08);
+}
+
+/* CONTAINER */
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 80px;
+}
+
+/* LEFT */
+.footer-left {
+    max-width: 320px;
+}
+
+.footer-logo {
+    height: 200px;
+    margin-bottom: 14px;
+}
+
+/* GRADIENT LINE UNDER LOGO */
+.footer-line {
+    width: 280px;
+    height: 2px;
+    background: linear-gradient(90deg, #8b5cf6, #3b82f6, #f97316);
+    margin-bottom: 18px;
+    border-radius: 2px;
+}
+
+/* TEXT */
+.footer-left p {
+    color: #94a3b8;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* LINKS */
+.footer-links h4 {
+    color: #f1f5f9;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.footer-links a {
+    display: block;
+    color: #94a3b8;
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-size: 14px;
+    transition: all 0.25s ease;
+}
+
+/* HOVER EFFECT (SMOOTH + GLOW FEEL) */
+.footer-links a:hover {
+    color: #8b5cf6;
+    transform: translateX(3px);
+}
+
+/* BOTTOM */
+.footer-bottom {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(148,163,184,0.08);
+    color: #64748b;
+    font-size: 13px;
+}
+/* CONTAINER */
+.login-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* LEFT SIDE */
+.signup-left {
+    width: 50%;
+    background:#0f172a;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.brand-title {
+    font-size: 42px;
+    font-weight: 700;
+}
+
+.brand-title span {
+    background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.brand-tagline {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #e2e8f0;
+    max-width: 300px;
+    text-align: center;
+}
+
+/* IMAGE */
+.signup-left img {
+    width: 70%;
+    margin-top: 20px;
+}
+
+/* RIGHT SIDE */
+.login-right {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* BOX */
+.login-box {
+    width: 350px;
+    padding: 40px;
+    border-radius: 12px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    text-align: center;
+}
+
+/* INPUT */
+.login-box input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background: transparent;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    color: white;
+}
+
+/* BUTTON */
+.login-btn-main {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    background: #8b5cf6;
+    color: white;
+    cursor: pointer;
+}
+
+/* DIVIDER */
+.divider {
+    height: 1px;
+    background: #334155;
+    margin: 25px 0;
+}
+
+/* SIGNUP LINK */
+.signup-section p {
+    color: #94a3b8;
+}
+
+.signup-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid #8b5cf6;
+    color: #8b5cf6;
+    text-decoration: none;
+}
+
+/* PASSWORD ICON */
+.password-wrapper {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #94a3b8;
+}
+</style>
+</head>
+<body>
+    <div class="navbar">
+
+    <!-- LEFT LOGO -->
+    <div class="nav-left">
+        <img src="{% static 'images/logo.png' %}" class="logo-img">
+    </div>
+
+    <!-- CENTER MENU -->
+    <div class="nav-center">
+       <a href="/" 
+   class="{% if request.path == '/' or 'accounts' in request.path %}active{% endif %}">Home</a>
+        <a href="/features/" class="{% if request.path == '/features/' %}active{% endif %}">Features</a>
+        <a href="/about/" class="{% if request.path == '/about/' %}active{% endif %}">About</a>
+        <a href="/contact/" class="{% if request.path == '/contact/' %}active{% endif %}">Contact</a>
+    </div>
+
+</div>
+<hr style="border: 1px solid rgba(148,163,184,0.08); margin: 0;">
+<div class="login-container">
+
+    <!-- LEFT -->
+    <div class="signup-left">
+       <h1 class="brand-title">
+    Smart<span>Analytics</span>
+</h1>
+
+    <p class="brand-tagline">
+    Unlock the power of your data with intelligent insights and AI-driven decisions.
+</p>
+        <img src="{% static 'images/logo.png' %}" alt="Signup">
+    </div>
+
+    <!-- RIGHT -->
+    <div class="login-right">
+
+        <div class="login-box">
+
+            <h2>Login</h2>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <input type="text" name="username" placeholder="Username">
+
+                <div class="password-wrapper">
+                    <input type="password" id="loginPassword" name="password" placeholder="Password">
+                    <span class="toggle-password" onclick="togglePassword('loginPassword')">👁</span>
+                </div>
+
+                <button class="login-btn-main">Login</button>
+            </form>
+
+            <div class="divider"></div>
+
+            <div class="signup-section">
+                <p>Don't have an account?</p>
+                <a href="{% url 'signup' %}" class="signup-btn">Create Account</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<hr style="border: 1px solid rgba(148,163,184,0.08); margin: 0;">
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <!-- LEFT -->
+        <div class="footer-left">
+            <img src="{% static 'images/logo.png' %}" class="footer-logo">
+
+            <div class="footer-line"></div>
+
+            <p>
+                Turning Raw Data into Business Intelligence.<br>
+                Analyze Smarter. Predict Better. Grow Faster.
+            </p>
+        </div>
+
+        <!-- QUICK LINKS -->
+        <div class="footer-links">
+            <h4>Quick Links</h4>
+            <a href="/">Home</a>
+            <a href="/features/">Features</a>
+            <a href="#work">How It Works</a>
+            <a href="/about/">About Us</a>
+        </div>
+
+        <!-- RESOURCES -->
+        <div class="footer-links">
+            <h4>Resources</h4>
+            <a href="/documentation/">Documentation</a>
+            <a href="/help/">Help Center</a>
+            <a href="/blog/">Blog</a>
+            <a href="/privacy/">Privacy Policy</a>
+            <a href="/terms/">Terms & Conditions</a>
+        </div>
+
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="footer-bottom">
+        © 2026 SmartAnalytics. All rights reserved.
+    </div>
+
+</footer>
+<script>
+function togglePassword(id) {
+    const input = document.getElementById(id);
+    input.type = input.type === "password" ? "text" : "password";
+}
+</script>
+</body>
+</html>
