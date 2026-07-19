@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    /* CONTAINER */
+.container {
+    padding: 30px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* SECTION CARD */
+.card {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+
+/* TITLES */
+.card h2 {
+    margin-bottom: 15px;
+    color: #8b5cf6;
+}
+
+/* VIDEO PLACEHOLDER */
+.video-box {
+    height: 300px;
+    border: 2px dashed #475569;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    font-size: 18px;
+}
+
+/* DOWNLOAD BUTTON */
+.download-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #8b5cf6;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.download-btn:hover {
+    background: #7c3aed;
+}
+
+/* STEPS */
+.steps {
+    line-height: 1.8;
+}
+
+.steps span {
+    color: #38bdf8;
+    font-weight: bold;
+}
+
+/* TIPS */
+.tips {
+    background: #0f172a;
+    padding: 15px;
+    border-left: 4px solid #f97316;
+    border-radius: 8px
+}
+</style>
+<div class="container">
+
+<!-- DEMO VIDEO -->
+<div class="card">
+    <h2>🎥 Demo Video</h2>
+
+    <!-- Replace this div with iframe later -->
+    <video width="100%" height="300" controls style="border-radius:10px;">
+    <source src="{% static 'video/h.mp4' %}" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+    
+</div>
+
+<!-- DEMO DATA -->
+<div class="card">
+    <h2>📂 Demo Dataset</h2>
+    <p>Download a sample Excel file to test the dashboard.</p>
+
+    <!-- Replace href later -->
+    <a href="{% static 'files/book2.xlsx' %}" class="download-btn">
+        ⬇ Download Demo Excel
+    </a>
+</div>
+
+<!-- HOW TO USE -->
+<div class="card">
+    <h2>⚙️ How to Use</h2>
+
+    <div class="steps">
+        <p><span>Step 1:</span> Upload your CSV/Excel dataset</p>
+        <p><span>Step 2:</span> View dashboard KPIs (Revenue, Profit, etc.)</p>
+        <p><span>Step 3:</span> Analyze charts and trends</p>
+        <p><span>Step 4:</span> Check AI Insights for business suggestions</p>
+        <p><span>Step 5:</span> Download PDF report</p>
+    </div>
+</div>
+
+<!-- FEATURES -->
+<div class="card">
+    <h2>🚀 Features</h2>
+    <ul>
+        <li>✔ Smart Dashboard Analytics</li>
+        <li>✔ AI-generated Insights</li>
+        <li>✔ Growth Tracking</li>
+        <li>✔ Data Visualization Charts</li>
+        <li>✔ PDF Report Export</li>
+    </ul>
+</div>
+
+<!-- TIPS -->
+<div class="card">
+    <h2>💡 Tips</h2>
+
+    <div class="tips">
+        Use datasets with columns like <b>Revenue, Expense, Date, Category</b>  
+        for best results.
+    </div>
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .policy-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    color: #f1f5f9;
+}
+
+.policy-container h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #94a3b8;
+    margin-bottom: 30px;
+}
+
+/* ========================= */
+/* CARD */
+/* ========================= */
+.policy-card {
+    background: linear-gradient(145deg, #1e293b, #0f172a);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    transition: 0.3s;
+}
+
+.policy-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+}
+
+/* ========================= */
+/* TEXT */
+/* ========================= */
+.policy-card h2 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.policy-card p,
+.policy-card li {
+    color: #cbd5f5;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.policy-card ul {
+    padding-left: 20px;
+}
+
+/* ========================= */
+/* WARNING */
+/* ========================= */
+.policy-card.warning {
+    border-left: 4px solid #ef4444;
+}
+</style>
+<div class="policy-container">
+
+    <h1>📜 Terms & Conditions</h1>
+    <p class="subtitle">Please read these terms carefully before using SmartAnalytics</p>
+
+    <!-- ========================= -->
+    <!-- ACCEPTANCE -->
+    <!-- ========================= -->
+    <div class="policy-card">
+        <h2>1. Acceptance of Terms</h2>
+        <p>
+            By accessing and using SmartAnalytics, you agree to comply with these
+            Terms & Conditions. If you do not agree, please do not use the platform.
+        </p>
+    </div>
+
+    <!-- ========================= -->
+    <!-- USE OF SERVICE -->
+    <!-- ========================= -->
+    <div class="policy-card">
+        <h2>2. Use of Service</h2>
+        <ul>
+            <li>You must use the platform for lawful purposes only</li>
+            <li>You are responsible for the data you upload</li>
+            <li>Do not upload sensitive or illegal content</li>
+        </ul>
+    </div>
+
+    <!-- ========================= -->
+    <!-- DATA RESPONSIBILITY -->
+    <!-- ========================= -->
+    <div class="policy-card">
+        <h2>3. Data Responsibility</h2>
+        <p>
+            Users are fully responsible for their datasets. SmartAnalytics does not
+            guarantee accuracy of results generated from uploaded data.
+        </p>
+    </div>
+
+    <!-- ========================= -->
+    <!-- AI USAGE -->
+    <!-- ========================= -->
+    <div class="policy-card">
+        <h2>4. AI-Generated Insights</h2>
+        <p>
+            AI insights are generated using external services (Google Gemini).
+            These insights are suggestions only and should not be considered
+            professional or financial advice.
+        </p>
+    </div>
+
+    <!-- ========================= -->
+    <!-- LIMITATION -->
+    <!-- ========================= -->
+    <div class="policy-card">
+        <h2>5. Limitation of Liability</h2>
+        <p>
+            SmartAnalytics is not liable for any decisions made based on the
+            analytics or AI-generated insights provided by the platform.
+        </p>
+    </div>
+
+    <!-- ========================= -->
+    <!-- ACCOUNT -->
+    <!-- ========================= -->
+    <div class="policy-card">
+        <h2>6. User Accounts</h2>
+        <p>
+            Users are responsible for maintaining the confidentiality of their
+            account information and for all activities under their account.
+        </p>
+    </div>
+
+    <!-- ========================= -->
+    <!-- MODIFICATIONS -->
+    <!-- ========================= -->
+    <div class="policy-card">
+        <h2>7. Modifications</h2>
+        <p>
+            We reserve the right to modify or update these terms at any time
+            without prior notice.
+        </p>
+    </div>
+
+    <!-- ========================= -->
+    <!-- TERMINATION -->
+    <!-- ========================= -->
+    <div class="policy-card">
+        <h2>8. Termination</h2>
+        <p>
+            We may suspend or terminate access if users violate these terms
+            or misuse the platform.
+        </p>
+    </div>
+
+    <!-- ========================= -->
+    <!-- CONTACT -->
+    <!-- ========================= -->
+    <div class="policy-card warning">
+        <h2>9. Contact</h2>
+        <p>
+            For any questions regarding these terms, please contact us through
+            the Contact page.
+        </p>
+    </div>
+
+</div>
+
+{% endblock %}

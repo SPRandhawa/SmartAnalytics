@@ -1,0 +1,2460 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #0f172a; /* your main background */
+        color: #f1f5f9;
+        font-family: 'Segoe UI', sans-serif;
+    }
+    /* NAVBAR */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+}
+
+/* MENU BUTTON */
+.menu-btn {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* CENTER TEXT */
+.nav-center {
+    text-align: center;
+    margin-left:150px;
+}
+
+.nav-center h2 {
+    margin: 0;
+}
+
+.nav-center p {
+    margin: 0;
+    color: #94a3b8;
+}
+
+.datetime {
+    font-size: 13px;
+    color: #94a3b8;
+}
+
+/* RIGHT */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg,  #9300f6, #f65ce4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+/* SIDEBAR (EMPTY) */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 260px;
+    height: 100%;
+    background: #020617;
+    transition: 0.3s;
+}
+/* LOGO BOX */
+.logo-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* IMAGE */
+.logo-img {
+    width: 100px;   /* adjust if needed */
+    height: 100px;
+}
+
+/* TEXT */
+.logo-text {
+    margin: 0;
+    font-size: 18px;
+}
+
+.logo-text span {
+    color: #a005f3;
+}
+/* MENU */
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.menu li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* ICON SIZE */
+.menu li i {
+    width: 18px;
+    height: 18px;
+}
+
+/* HOVER */
+.menu li:hover {
+    background: rgba(139, 92, 246, 0.2);
+}
+
+/* ACTIVE */
+.menu li.active {
+    background: #a005f3;
+}
+
+/* LOGOUT */
+.logout {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    color: white;
+    cursor: pointer;
+}
+
+.logout:hover {
+    color: #ef4444;
+}
+.section {
+    display: none;
+}
+
+.active-section {
+    display: block;
+}
+.center-heading {
+   margin-left:550px
+   
+}
+
+/* MAIN SPACING */
+.content {
+    padding: 20px 40px;  /* LEFT RIGHT SPACE FIX */
+}
+
+/* TITLE */
+.settings-title {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* CARD */
+.settings-card {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.1);
+}
+
+.csettings-card
+{
+      background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.1);
+}
+/* ROW */
+.row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+/* FIELD */
+.field {
+    flex: 1;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+}
+.cfield
+{
+     flex: 1;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+}
+/* LABEL */
+.field label {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-bottom: 6px;
+}
+
+.cfield label
+{
+     font-size: 13px;
+    color: #94a3b8;
+    margin-bottom: 6px;
+}
+/* INPUT */
+.field input {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #1e293b;
+    background: #020617;
+    color: white;
+    transition: 0.3s;
+}
+.cfield input {
+    padding: 12px ;
+    border-radius: 8px;
+    border: 1px solid #1e293b;
+    background: #020617;
+    color: white;
+    transition: 0.3s;
+}
+
+.field input:focus {
+    border-color: #8b5cf6;
+    outline: none;
+    box-shadow: 0 0 8px #8b5cf6;
+}
+.cfield input:focus {
+    border-color: #8b5cf6;
+    outline: none;
+    box-shadow: 0 0 8px #8b5cf6;
+}
+/* PASSWORD BOX */
+.password-box {
+    position: relative;
+}
+.cpassword-box {
+    position: relative;
+}
+.password-box input {
+    width: 100%;
+    padding-right: 40px;
+}
+.cpassword-box input {
+    width: 95%;
+  
+}
+#new_password
+{
+    padding:30px,3px
+}
+/* EYE ICON */
+.eye {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+/* BUTTON */
+.btn-primary {
+    margin-top: 15px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px #8b5cf6;
+}
+
+/* UPLOAD BOX */
+.upload-box {
+    display: block;
+    padding: 20px;
+    border: 2px dashed #8b5cf6;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: 0.3s;
+}
+
+.upload-box:hover {
+    background: rgba(139, 92, 246, 0.1);
+}
+/* FILE INPUT */
+.file-upload {
+    display: inline-block;
+    padding: 10px 16px;
+    background: #1e293b;
+    color: #f1f5f9;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    border: 1px solid #334155;
+    transition: 0.3s;
+}
+
+.file-upload:hover {
+    background: #334155;
+}
+
+.file-upload input {
+    display: none;
+}
+
+/* BUTTONS */
+.btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn.primary {
+    background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+    color: white;
+}
+
+.btn.danger {
+    background: #ef4444;
+    color: white;
+}
+
+/* PREVIEW */
+.preview-box {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: #020617;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.preview-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.preview-box span {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+/* SUCCESS MESSAGE */
+.alert.success {
+    background: #16a34a;
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+.profile img {
+    width: 120%;
+    height: 120%;
+    border-radius: 50%;
+    object-fit: cover;  /* 🔥 IMPORTANT */
+   margin left:10px
+}
+/* STRENGTH BAR */
+.strength-container {
+    width: 100%;
+    height: 6px;
+    background: #1e293b;
+    border-radius: 5px;
+    margin-top: 6px;
+    overflow: hidden;
+}
+
+#strength-bar {
+    height: 100%;
+    width: 0%;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+/* TEXT */
+#strength-text {
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+}
+.table-container {
+    margin-top: 30px;
+    background: #020617;
+    padding: 20px;
+    border-radius: 12px;
+    overflow-x: auto;
+
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #f1f5f9;
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #1e293b;
+    text-align: left;
+}
+
+th {
+    background: #1e293b;
+}
+.guidelines {
+    margin-top: 30px;
+    padding: 25px;
+    background: linear-gradient(145deg, #1e293b, #0f172a);
+    border-radius: 14px;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.08);
+}
+
+.guidelines h3 {
+    margin-bottom: 15px;
+    color: #f1f5f9;
+    font-size: 20px;
+    font-weight: 600;
+    border-left: 4px solid #8b5cf6;
+    padding-left: 10px;
+}
+
+/* LIST */
+.guidelines ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* EACH ITEM */
+.guidelines li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #cbd5f5;
+    transition: 0.3s;
+}
+
+/* HOVER EFFECT */
+.guidelines li:hover {
+    background: rgba(139, 92, 246, 0.08);
+}
+
+/* COLORS BY TYPE */
+.guidelines li:nth-child(1),
+.guidelines li:nth-child(2),
+.guidelines li:nth-child(3),
+.guidelines li:nth-child(4) {
+    border-left: 3px solid #22c55e; /* green */
+}
+
+.guidelines li:nth-child(5) {
+    border-left: 3px solid #facc15; /* yellow */
+}
+
+.guidelines li:nth-child(6) {
+    border-left: 3px solid #ef4444; /* red */
+}
+
+/* BOLD TEXT */
+.guidelines b {
+    color: #ffffff;
+}
+/* FILE INFO BAR */
+.file-info-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: #1e293b;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    color: #cbd5f5;
+}
+.file-info-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #1e293b;
+    padding: 14px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.file-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+.value {
+    font-size: 14px;
+    color: #f1f5f9;
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+
+/* TABLE */
+.table-container {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 12px;
+     max-height: 400px;
+    overflow-y: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background: #334155;
+    color: #f1f5f9;
+}
+
+td {
+    color: #cbd5f5;
+    border-bottom: 1px solid #334155;
+}
+/* CONTAINER */
+.kpi-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+/* CARD */
+.kpi-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    background: #1e293b;
+    padding: 18px;
+    border-radius: 14px;
+
+    transition: 0.3s ease;
+}
+
+/* HOVER MOVE */
+.kpi-card:hover {
+    transform: translateY(-5px);
+}
+
+/* ICON */
+.kpi-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    transition: 0.3s ease;
+}
+
+/* CONTENT */
+.kpi-content h4 {
+    font-size: 13px;
+    color: #94a3b8;
+}
+
+.kpi-content h2 {
+    font-size: 22px;
+    color: #f1f5f9;
+    margin: 4px 0;
+}
+
+.kpi-change {
+    font-size: 12px;
+}
+
+/* ================= COLORS ================= */
+
+/* REVENUE */
+.kpi-card.revenue .kpi-icon {
+    background: rgba(34,197,94,0.2);
+    color: #22c55e;
+}
+.kpi-card.revenue:hover {
+    box-shadow: 0 10px 25px rgba(34,197,94,0.25);
+}
+.kpi-card.revenue:hover .kpi-icon {
+    background: #22c55e;
+    color: white;
+}
+
+/* EXPENSE */
+.kpi-card.expense .kpi-icon {
+    background: rgba(239,68,68,0.2);
+    color: #ef4444;
+}
+.kpi-card.expense:hover {
+    box-shadow: 0 10px 25px rgba(239,68,68,0.25);
+}
+.kpi-card.expense:hover .kpi-icon {
+    background: #ef4444;
+    color: white;
+}
+
+/* SALES */
+.kpi-card.sales .kpi-icon {
+    background: rgba(59,130,246,0.2);
+    color: #3b82f6;
+}
+.kpi-card.sales:hover {
+    box-shadow: 0 10px 25px rgba(59,130,246,0.25);
+}
+.kpi-card.sales:hover .kpi-icon {
+    background: #3b82f6;
+    color: white;
+}
+
+/* GROWTH */
+.kpi-card.growth .kpi-icon {
+    background: rgba(168,85,247,0.2);
+    color: #a855f7;
+}
+.kpi-card.growth:hover {
+    box-shadow: 0 10px 25px rgba(168,85,247,0.25);
+}
+.kpi-card.growth:hover .kpi-icon {
+    background: #a855f7;
+    color: white;
+}
+
+/* TEXT COLORS */
+.kpi-change.positive {
+    color: #22c55e;
+}
+.kpi-change.negative {
+    color: #ef4444;
+}
+.kpi-change.neutral {
+    color: #facc15;
+}
+
+
+.full-width {
+    margin-top: 20px;
+}
+/* PROFIT */
+.profit .kpi-icon {
+    background: rgba(34,197,94,0.2);
+    color: #22c55e;
+}
+.profit:hover {
+    border: 1px solid #22c55e;
+}
+.ckpi-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+/* LOSS */
+.loss .kpi-icon {
+    background: rgba(239,68,68,0.2);
+    color: #ef4444;
+}
+.loss:hover {
+    border: 1px solid #ef4444;
+}
+
+/* TAX */
+.tax .kpi-icon {
+    background: rgba(249,115,22,0.2);
+    color: #f97316;
+}
+.tax:hover {
+    border: 1px solid #f97316;
+}
+.tax-distribution {
+    margin-top: 20px;
+}
+
+/* =========================
+   📊 MAIN CONTAINER
+========================= */
+.charts-container {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* =========================
+   📦 CHART CARD (TOP 2)
+========================= */
+.chart-card {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 16px;
+
+
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.chart-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(139,92,246,0.4);
+}
+
+/* TITLE */
+.chart-card h3 {
+    color: #f1f5f9;
+    font-size: 15px;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+/* CANVAS */
+.chart-card canvas {
+    width: 100% !important;
+    height: 280px !important;
+}
+
+
+/* =========================
+   🥧 PIE SECTION (BOTTOM)
+========================= */
+.piebody {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* PIE CARDS */
+.cchart-card {
+    background: #1e293b;
+    border-radius: 16px;
+    height: 350px;
+    padding: 15px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.cchart-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(59,130,246,0.4);
+}
+
+/* HEADER */
+.cchart-header h3 {
+    color: #f1f5f9;
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+/* BODY */
+.cchart-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* PIE CANVAS */
+.cchart-body canvas {
+    width: 100% !important;
+    height: 250px !important;
+}
+
+
+/* =========================
+   📱 RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+
+    .piebody {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-card canvas {
+        height: 250px !important;
+    }
+
+    .cchart-body canvas {
+        height: 220px !important;
+    }
+}
+/* ========================= */
+/* 🔷 BAR CHART WRAPPER */
+/* ========================= */
+.barchart {
+    margin-top: 30px;
+}
+
+/* ========================= */
+/* 📦 CARD (BIGGER + CLEAN) */
+/* ========================= */
+.bchart-card {
+    background: #1e293b;
+    border-radius: 18px;
+    padding: 30px;              /* 🔥 increased spacing */
+    transition: all 0.3s ease;
+    min-height: 700px;          /* 🔥 bigger card */
+}
+
+/* HOVER EFFECT */
+.bchart-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+}
+
+/* ========================= */
+/* 📝 TITLE */
+/* ========================= */
+.bchart-card h3 {
+    color: #f1f5f9;
+    font-size: 30px;            /* 🔥 bigger text */
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+/* ========================= */
+/* 🔥 SCROLL CONTAINER */
+/* ========================= */
+.bchart-scroll {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 12px;
+}
+
+/* ========================= */
+/* 🎯 CANVAS */
+/* ========================= */
+.bchart-scroll canvas {
+    height: 600px !important;   /* 🔥 bigger chart */
+    min-width: 900px;           /* 🔥 base width */
+}
+
+/* ========================= */
+/* ✨ PREMIUM SCROLLBAR */
+/* ========================= */
+.bchart-scroll::-webkit-scrollbar {
+    height: 10px;
+}
+
+.bchart-scroll::-webkit-scrollbar-track {
+    background: #0f172a;
+    border-radius: 10px;
+}
+
+.bchart-scroll::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #3b82f6, #22c55e);
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.bchart-scroll::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg, #2563eb, #16a34a);
+}
+/* ========================= */
+/* 🧠 INSIGHTS CONTAINER */
+/* ========================= */
+.insights-container {
+    margin-top: 25px;
+}
+
+.insights-container h3 {
+    color: #f1f5f9;
+    margin-bottom: 15px;
+}
+
+/* GRID */
+.insight-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+/* CARD BASE */
+.insight-card {
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+/* ========================= */
+/* 🎨 COLORS */
+/* ========================= */
+
+/* GREEN */
+.insight-card.success {
+    background: rgba(34,197,94,0.15);
+    color: #22c55e;
+}
+.insight-card.success:hover {
+    box-shadow: 0 0 15px #22c55e;
+    transform: translateY(-5px);
+}
+
+/* RED */
+.insight-card.danger {
+    background: rgba(239,68,68,0.15);
+    color: #ef4444;
+}
+.insight-card.danger:hover {
+    box-shadow: 0 0 15px #ef4444;
+    transform: translateY(-5px);
+}
+
+/* YELLOW */
+.insight-card.warning {
+    background: rgba(245,158,11,0.15);
+    color: #f59e0b;
+}
+.insight-card.warning:hover {
+    box-shadow: 0 0 15px #f59e0b;
+    transform: translateY(-5px);
+}
+
+/* BLUE */
+.insight-card.info {
+    background: rgba(59,130,246,0.15);
+    color: #3b82f6;
+}
+.insight-card.info:hover {
+    box-shadow: 0 0 15px #3b82f6;
+    transform: translateY(-5px);
+}
+/* CONTAINER */
+.activity-container {
+    max-width: 700px;   /* 🔥 prevents full-width stretch */
+    margin: auto;
+}
+
+/* CARD */
+.activity-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: #1e293b;
+    padding: 14px 18px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+
+    transition: 0.3s;
+}
+
+/* HOVER */
+.activity-card:hover {
+    background: #273449;
+    transform: translateY(-2px);
+}
+
+/* REMOVE LINK STYLE */
+.activity-main {
+    text-decoration: none;
+    flex: 1;
+}
+
+/* TEXT BLOCK */
+.activity-text {
+    display: flex;
+    flex-direction: column;
+}
+
+/* FILE NAME */
+.file-name {
+    color: #f1f5f9;
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* DATE */
+.file-date {
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+/* DELETE BUTTON */
+.delete-btn {
+    background: #ef4444;
+    border: none;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* HOVER DELETE */
+.delete-btn:hover {
+    background: #dc2626;
+    transform: scale(1.1);
+}
+/* ========================= */
+/* 📊 ANALYTICS SECTION */
+/* ========================= */
+.analytics-grid {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+/* ========================= */
+/* 📦 CARD STYLE */
+/* ========================= */
+.analytics-grid .acard {
+    position: relative;
+    background: linear-gradient(145deg, #1e293b, #0f172a);
+    border-radius: 16px;
+    padding: 22px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* subtle border glow */
+.analytics-grid .acard::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    padding: 1px;
+    background: linear-gradient(120deg, transparent, #d43bf665, transparent);
+    opacity: 0;
+    transition: 0.3s;
+}
+
+/* hover effect */
+.analytics-grid .acard:hover::before {
+    opacity: 1;
+}
+
+/* lift + scale */
+.analytics-grid .acard:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* ========================= */
+/* 📝 TITLE */
+/* ========================= */
+.analytics-grid .acard h4 {
+    font-size: 14px;
+    color: #94a3b8;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+/* ========================= */
+/* 🔥 VALUE */
+/* ========================= */
+.analytics-grid .acard p {
+    font-size: 22px;
+    font-weight: 600;
+    color: #f1f5f9;
+    letter-spacing: 0.5px;
+}
+
+/* ========================= */
+/* ✨ COLOR ACCENTS (AUTO) */
+/* ========================= */
+.analytics-grid.acard:nth-child(1) p { color: #22c55e; }  /* green */
+.analytics-grid.acard:nth-child(2) p { color: #ef4444; }  /* red */
+.analytics-grid.acard:nth-child(3) p { color: #3b82f6; }  /* blue */
+.analytics-grid.acard:nth-child(4) p { color: #f97316; }  /* orange */
+.analytics-grid.acard:nth-child(5) p { color: #a855f7; }  /* purple */
+.analytics-grid.acard:nth-child(6) p { color: #06b6d4; }  /* cyan */
+
+/* ========================= */
+/* 📱 RESPONSIVE */
+/* ========================= */
+@media (max-width: 768px) {
+    .analytics-grid  {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+.ai-section {
+    margin-top: 30px;
+}
+
+.ai-section h3 {
+    color: #f1f5f9;
+    margin-bottom: 15px;
+}
+
+.ai-card {
+    background: linear-gradient(145deg, #1e293b, #0f172a);
+    padding: 14px 18px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    color: #cbd5f5;
+    transition: 0.3s;
+}
+
+.ai-card:hover {
+    transform: translateX(5px);
+    background: #89299f;
+}
+ .summary-box {
+            white-space: normal;
+            background: linear-gradient(145deg, #0f172a, #111827);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 22px 24px;
+            border-radius: 16px;
+            font-size: 15px;
+            overflow-x: auto;
+            color: #e2e8f0;
+            line-height: 1.8;
+            letter-spacing: 0.2px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .summary-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            padding: 16px;
+            min-height: 150px;
+        }
+
+        .summary-card h4 {
+            color: #f8fafc;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .summary-card p,
+        .summary-card li {
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .summary-card ul {
+            padding-left: 18px;
+            margin: 0;
+        }
+
+        .report-hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .eyebrow {
+            color: #8b5cf6;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .report-subtitle {
+            color: #94a3b8;
+            margin-top: 6px;
+        }
+
+        .report-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .report-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .report-card strong {
+            font-size: 22px;
+            color: #f8fafc;
+        }
+
+        .metric-label {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        .accent-green { border-left: 4px solid #22c55e; }
+        .accent-blue { border-left: 4px solid #3b82f6; }
+        .accent-purple { border-left: 4px solid #8b5cf6; }
+        .accent-gold { border-left: 4px solid #f59e0b; }
+
+        .report-panel {
+            background: rgba(255,255,255,0.03);
+            border-radius: 18px;
+            padding: 18px;
+            margin-top: 16px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .panel-heading {
+            margin-bottom: 10px;
+        }
+
+        .panel-heading h3 {
+            color: #f8fafc;
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .insights {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .insight {
+            background: linear-gradient(145deg, rgba(15,23,42,0.95), rgba(30,41,59,0.95));
+            padding: 12px 14px;
+            border-left: 4px solid #8b5cf6;
+            border-radius: 12px;
+            color: #e2e8f0;
+        }
+
+        .report-btn {
+            margin-top: 0;
+            white-space: nowrap;
+        }
+
+        /* BUTTON */
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 500;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        @media(max-width: 900px){
+            .cards {
+                grid-template-columns: repeat(2,1fr);
+            }
+            .report-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .report-hero {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media(max-width: 500px){
+            .cards {
+                grid-template-columns: 1fr;
+            }
+            .report-grid {
+                grid-template-columns: 1fr;
+            }
+            .report-shell {
+                padding: 18px;
+            }
+        }
+
+        @media(max-width: 900px){
+            .cards {
+                grid-template-columns: repeat(2,1fr);
+            }
+        }
+
+        @media(max-width: 500px){
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+.alert-card {
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.alert-card.success {
+    background: #065f46;
+    color: #d1fae5;
+}
+
+.alert-card.warning {
+    background: #78350f;
+    color: #fde68a;
+}
+
+.alert-card.danger {
+    background: #7f1d1d;
+    color: #fecaca;
+}
+
+.alert-card.info {
+    background: #1e3a8a;
+    color: #bfdbfe;
+}
+.logout-form {
+    margin: 0;
+}
+
+.logout {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    color: #f87171; /* red */
+    cursor: pointer;
+    font-size: 14px;
+    padding: 8px;
+}
+
+.logout:hover {
+    color: #ef4444;
+}
+</style>
+</head>
+<body>
+    <!-- NAVBAR -->
+<div class="navbar">
+
+    <!-- LEFT: MENU BUTTON -->
+    <div class="menu-btn" onclick="toggleSidebar()">
+        ☰
+    </div>
+
+    <!-- CENTER: TEXT -->
+    <div class="nav-center">
+     <h2>
+    {{ greeting }}<br> Welcome back, {{ user.username }} 👋
+</h2>
+<p>Here’s what’s happening with your business today</p>
+        <div id="datetime-info" class="datetime"></div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="nav-right">
+       
+      <div class="profile">
+    {% if user.profile.image %}
+        <img src="{{ user.profile.image.url }}" alt="profile">
+    {% else %}
+        {{ user.username|first|upper }}
+    {% endif %}
+</div>
+    </div>
+
+</div><hr>
+<div class="content">
+
+    <div id="dashboard" class="section{% if not show_upload_section %} active-section{% endif %}">
+    <h4 class="center-heading" style="font-size: 30px;">Dashboard Content</h4>
+    <div class="file-info-bar">
+
+    <div class="file-item">
+        <span class="label">Dataset</span>
+        <span class="value">{{ file_name|default:"No file uploaded" }}</span>
+    </div>
+
+    <div class="file-item">
+        <span class="label">Date</span>
+        <span class="value">
+            {% if upload_time %}
+                {{ upload_time|date:"d M Y" }}
+            {% else %}
+                -
+            {% endif %}
+        </span>
+    </div>
+
+    <div class="file-item">
+        <span class="label">Time</span>
+        <span class="value">
+            {% if upload_time %}
+                {{ upload_time|time:"h:i A" }}
+            {% else %}
+                -
+            {% endif %}
+        </span>
+    </div>
+
+</div>
+<div class="kpi-container">
+
+    <!-- REVENUE -->
+    <div class="kpi-card revenue">
+        <div class="kpi-icon">₹</div>
+        <div class="kpi-content">
+            <h4>Total Revenue</h4>
+            <h2>₹ {{ total_revenue }}</h2>
+            <p class="kpi-change 
+                {% if growth_rate > 0 %}positive
+                {% elif growth_rate < 0 %}negative
+                {% else %}neutral
+                {% endif %}">
+                {{ growth_text }}
+            </p>
+        </div>
+    </div>
+
+    <!-- EXPENSE -->
+    <div class="kpi-card expense">
+        <div class="kpi-icon">₹</div>
+        <div class="kpi-content">
+            <h4>Total Expense</h4>
+            <h2>₹ {{ total_expense }}</h2>
+            <p class="kpi-change neutral">Total spending</p>
+        </div>
+    </div>
+
+    <!-- SALES -->
+    <div class="kpi-card sales">
+        <div class="kpi-icon">₹</div>
+        <div class="kpi-content">
+            <h4>Total Sales</h4>
+            <h2>₹ {{ total_revenue }}</h2>
+            <p class="kpi-change positive">Overall performance</p>
+        </div>
+    </div>
+
+    <!-- GROWTH -->
+    <div class="kpi-card growth">
+        <div class="kpi-icon">%</div>
+        <div class="kpi-content">
+            <h4>Growth Rate</h4>
+            <h2>{{ growth_rate }}%</h2>
+            <p class="kpi-change 
+                {% if growth_rate > 0 %}positive
+                {% elif growth_rate < 0 %}negative
+                {% else %}neutral
+                {% endif %}">
+                {{ growth_text }}
+            </p>
+        </div>
+    </div>
+
+</div>
+<div class="charts-container">
+
+    
+
+        <!-- SALES OVER TIME -->
+        <div class="chart-card">
+            <h3>Sales Over Time</h3>
+            <canvas id="salesChart"></canvas>
+        </div>
+        </div>
+        <!-- TOP PRODUCTS -->
+         <div class="barchart">
+        <div class="bchart-card">
+    <h3>Top Products</h3>
+
+    <div class="bchart-scroll">
+        <canvas id="productChart"></canvas>
+    </div>
+</div>
+
+    
+
+</div><br>
+<!-- CATEGORY -->
+ <div class="piebody">
+
+    <div class="cchart-card">
+        <div class="cchart-header">
+            <h3>Sales by Category</h3>
+        </div>
+
+        <div class="cchart-body">
+            <canvas id="categoryChart"></canvas>
+        </div>
+    </div>
+
+
+    <div class="cchart-card">
+        <div class="cchart-header">
+            <h3>Tax Distribution</h3>
+        </div>
+
+        <div class="cchart-body">
+            <canvas id="taxChart"></canvas>
+        </div>
+    </div>
+
+</div>
+<br>
+<div class="ckpi-container">
+     <!-- PROFIT -->
+    <div class="kpi-card profit">
+        <div class="kpi-icon">
+            💰
+        </div>
+
+        <div class="kpi-content">
+            <h4>Total Profit</h4>
+            <h2>₹ {{ net_profit }}</h2>
+            <p class="kpi-sub">Calculated after expenses & tax</p>
+        </div>
+    </div>
+
+    <!-- LOSS -->
+    <div class="kpi-card loss">
+        <div class="kpi-icon">
+            📉
+        </div>
+
+        <div class="kpi-content">
+            <h4>Total Loss</h4>
+            <h2>₹ {{ total_expense }}</h2>
+            <p class="kpi-sub">Total expenses incurred</p>
+        </div>
+    </div>
+
+    <!-- TAX -->
+    <div class="kpi-card tax">
+        <div class="kpi-icon">
+            🧾
+        </div>
+
+        <div class="kpi-content">
+            <h4>Total Tax</h4>
+            <h2>₹ {{ total_tax }}</h2>
+            <p class="kpi-sub">GST / Tax paid</p>
+        </div>
+    </div>
+
+</div>
+<div class="insights-container">
+    <h3>🧠 Smart Insights</h3>
+
+    <div class="insight-grid">
+        {% for item in insights %}
+            <div class="insight-card {{ item.type }}">
+                {{ item.text }}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="table-container">
+    <h3>Data Preview</h3>
+
+    <table>
+        <thead>
+            <tr>
+                {% for col in columns %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for row in data_preview %}
+                <tr>
+                    {% for cell in row %}
+                        <td>{{ cell }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+    </div>
+
+  <div id="upload" class="section{% if show_upload_section %} active-section{% endif %}">
+
+    <h2 class="center-heading">Upload Business Data</h2>
+    <p class="sub-text">Upload your financial dataset to generate analytics dashboard</p>
+
+    {% if upload_success_message %}
+        <div class="alert success">{{ upload_success_message }}: {{ file_name }}</div>
+        <script>
+            // Keep the confirmation on this page load, but make the next refresh a clean dashboard GET.
+            window.history.replaceState({}, document.title, window.location.pathname);
+        </script>
+    {% endif %}
+
+    <!-- UPLOAD FORM -->
+    <form method="POST" enctype="multipart/form-data" onsubmit="return validateUpload()">
+        {% csrf_token %}
+
+        <div class="upload-box">
+            <input type="file" name="data_file" id="fileInput" hidden onchange="showFileName()">
+
+            <label for="fileInput" class="upload-area">
+                <p id="fileLabel">Click to upload CSV / Excel file</p>
+            </label>
+        </div>
+         
+        <button class="btn primary">Upload File</button>
+    </form>
+
+    <!-- GUIDELINES -->
+    <div class="guidelines">
+        <h3>Upload Guidelines</h3>
+
+        <ul>
+            <li>✔ Supported formats: <b>CSV (.csv)</b>, <b>Excel (.xlsx)</b></li>
+            <li>✔ File must contain <b>business / financial data</b></li>
+            <li>✔ Required: <b>Revenue / Sales / Income</b> and <b>Expense / Cost</b></li>
+            <li>✔ Recommended: Date, Product, Category, Tax (GST)</li>
+            <li>⚠ You can upload <b>Kaggle datasets</b> only if they contain financial/business data</li>
+            <li>❌ Do NOT upload non-business datasets (students, medical, etc.)</li>
+        </ul>
+    </div>
+
+</div>
+
+    <div id="analytics" class="section">
+        <h4 class="center-heading" style="font-size: 30px;">Analytics Content</h4>
+        <h2>Analytics Insights</h2>
+
+        <div class="analytics-grid">
+
+        <div class="acard">
+        <h4>🏆 Best Product</h4>
+        <p>{{ analytics_insights.best_product }}</p>
+        </div>
+
+        <div class="acard">
+        <h4>📉 Worst Product</h4>
+        <p>{{ analytics_insights.worst_product }}</p>
+        </div>
+
+        <div class="acard">
+        <h4>📊 Top Category</h4>
+        <p>{{ analytics_insights.top_category }}</p>
+        </div>
+
+        <div class="acard">
+        <h4>💰 Avg Revenue</h4>
+        <p>₹{{ analytics_insights.avg_revenue }}</p>
+        </div>
+
+        <div class="acard">
+        <h4>📈 Profit Margin</h4>
+        <p>{{ analytics_insights.profit_margin }}%</p>
+        </div>
+
+        <div class="acard">
+        <h4>📅 Best Month</h4>
+        <p>{{ analytics_insights.best_month }}</p>
+        </div>
+
+        <div class="acard">
+        <h4>📅 Worst Month</h4>
+        <p>{{ analytics_insights.worst_month }}</p>
+        </div></div>
+
+        <div class="ai-section">
+        <h3>🤖 AI Insights</h3>
+
+        {% for insight in ai_insights %}
+        <div class="ai-card">
+            {{ insight }}
+        </div>
+        {% empty %}
+        <p>No AI insights available</p>
+        {% endfor %}
+        </div>
+    </div>
+
+<div id="report" class="section">
+    <div class="report-shell">
+        <div class="report-hero">
+            <div>
+                <p class="eyebrow">Professional Report</p>
+                <h2>📊 SmartAnalytics Report</h2>
+                <p class="report-subtitle">A polished summary of your latest business dataset with actionable insights.</p>
+            </div>
+            <a href="{% url 'download_report' %}" class="btn report-btn">
+                ⬇ Download PDF Report
+            </a>
+        </div>
+
+        <div class="report-grid">
+            <div class="report-card accent-green">
+                <span class="metric-label">Total Revenue</span>
+                <strong>₹{{ total_revenue }}</strong>
+            </div>
+            <div class="report-card accent-blue">
+                <span class="metric-label">Total Expense</span>
+                <strong>₹{{ total_expense }}</strong>
+            </div>
+            <div class="report-card accent-purple">
+                <span class="metric-label">Total Tax</span>
+                <strong>₹{{ total_tax }}</strong>
+            </div>
+            <div class="report-card accent-gold">
+                <span class="metric-label">Net Profit</span>
+                <strong>₹{{ net_profit }}</strong>
+            </div>
+        </div>
+
+        <div class="report-panel">
+            <div class="panel-heading">
+                <h3>📄 Data Summary</h3>
+            </div>
+            <div class="summary-box">
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <h4>Overview</h4>
+                        <p>{{ summary }}</p>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Key Metrics</h4>
+                        <ul>
+                            <li>Revenue total: ₹{{ total_revenue }}</li>
+                            <li>Expense total: ₹{{ total_expense }}</li>
+                            <li>Tax total: ₹{{ total_tax }}</li>
+                            <li>Net profit: ₹{{ net_profit }}</li>
+                        </ul>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Business Notes</h4>
+                        <p>Review growth trends, compare expenses against revenue, and monitor tax impact for better decision-making.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="report-panel">
+            <div class="panel-heading">
+                <h3>🧠 AI Insights</h3>
+            </div>
+            <div class="insights">
+                {% for insight in ai_insights %}
+                    <div class="insight">{{ insight }}</div>
+                {% empty %}
+                    <div class="insight">Upload a dataset to generate your first AI-powered insights.</div>
+                {% endfor %}
+            </div>
+        </div>
+        {% if chart_explanations %}
+        <div class="report-panel">
+            <div class="panel-heading">
+                <h3>Chart Explanations</h3>
+            </div>
+            <div class="insights">
+                {% for explanation in chart_explanations %}
+                    <div class="insight"><strong>{{ explanation.title }}:</strong> {{ explanation.text }}</div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+    
+    <div id="activity" class="section">
+    <div class="activity-section">
+    <h3>📌 Recent Activity</h3>
+
+    {% if activities %}
+        <div class="activity-grid">
+            {% for act in activities %}
+                <div class="activity-card">
+
+                    <div class="card-top">
+                        <a href="{% url 'dashboard' %}?dataset={{ act.id }}" class="file-link">
+                            📄 {{ act.text }}
+                            </a>
+                        <div class="date">{{ act.time }}</div>
+                    </div>
+
+                    <div class="card-actions">
+                        <form method="POST" action="{% url 'delete_dataset' act.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="delete-btn">
+                                🗑 Delete
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No activity yet</p>
+    {% endif %}
+</div>
+</div>
+
+    <div id="alerts" class="section">
+        <h4 class="center-heading" style="font-size: 30px;">Alerts Content</h4>
+        <div class="alerts-section">
+    <h3>🔔 Alerts & Notifications</h3>
+
+    {% for alert in alerts %}
+    <div class="alert-card {{ alert.type }}">
+        {{ alert.text }}
+    </div>
+    {% empty %}
+    <div class="alert-card info">
+        No alerts — everything looks good 👍
+    </div>
+    {% endfor %}
+</div>
+    </div>
+<div id="settings" class="section">
+
+    <h2 class="settings-title">User Settings</h2>
+
+    <!-- ACCOUNT INFO -->
+    <div class="settings-card">
+        <h4>Account Information</h4>
+
+        <div class="row">
+            <div class="field">
+                <label>Username</label>
+                <input type="text" value="{{ user.username }}" readonly>
+            </div>
+
+            <div class="field">
+                <label>Email</label>
+                <input type="email" value="{{ user.email }}" readonly>
+            </div>
+
+            <div class="field">
+                <label>Password</label>
+                <input type="password" value="********" readonly>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHANGE PASSWORD -->
+    <div class="csettings-card">
+        <h4>Change Password</h4>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="row">
+
+                <div class="cfield password-field">
+                    <label>Current Password</label>
+                    <div class="cpassword-box">
+                        <input type="password" name="current_password" id="current_password">
+                        <i class="eye" onclick="togglePassword('current_password', this)">👁</i>
+                    </div>
+                </div>
+
+                <div class="cfield password-field">
+    <label>New Password</label>
+
+    <div class="cpassword-box">
+        <input type="password" name="new_password" id="new_password" onkeyup="checkStrength()">
+        <i class="eye" onclick="togglePassword('new_password', this)">👁</i>
+    </div>
+
+    <!-- STRENGTH BAR -->
+    <div class="strength-container">
+        <div id="strength-bar"></div>
+    </div>
+
+    <small id="strength-text"></small>
+</div>
+                
+
+                <div class="cfield password-field">
+                    <label>Confirm Password</label>
+                    <div class="cpassword-box">
+                        <input type="password" name="confirm_password" id="confirm_password">
+                        <i class="eye" onclick="togglePassword('confirm_password', this)">👁</i>
+                    </div>
+                </div>
+
+            </div>
+
+            <button class="btn-primary">Update Password</button>
+        </form>
+    </div>
+
+    <!-- CHANGE EMAIL -->
+    <div class="settings-card">
+        <h4>Change Email</h4>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="row">
+                <div class="field">
+                    <label>New Email</label>
+                    <input type="email" name="new_email" placeholder="Enter new email">
+                </div>
+            </div>
+
+            <button class="btn-primary">Update Email</button>
+        </form>
+    </div>
+
+    <!-- PROFILE PHOTO -->
+  <div class="settings-card">
+    <h4>Profile Photo</h4>
+
+   {% for message in messages %}
+    {% if 'profile' in message.tags %}
+        <div class="alert success">{{ message }}</div>
+    {% endif %}
+{% endfor %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- PREVIEW -->
+        <div class="preview-box">
+            {% if user.profile.image %}
+                <img id="preview-image" src="{{ user.profile.image.url }}">
+            {% else %}
+                <img id="preview-image" style="display:none;">
+                <span id="preview-text">No image selected</span>
+            {% endif %}
+        </div>
+
+        <!-- CUSTOM FILE INPUT -->
+        <label class="file-upload">
+            <input type="file" name="profile_image" id="file-input" onchange="previewImage(event)">
+            <span id="file-name">Choose Image</span>
+        </label>
+
+        <!-- BUTTONS -->
+        <div class="btn-group">
+            <button type="submit" name="update_photo" class="btn primary">Upload</button>
+
+            {% if user.profile.image %}
+                <button type="submit" name="remove_photo" class="btn danger">Remove</button>
+            {% endif %}
+        </div>
+    </form>
+</div>
+
+</div>
+<!-- EMPTY SIDEBAR -->
+<div id="sidebar" class="sidebar">
+    <div class="sidebar-top">
+
+    <div class="logo-box">
+        <img src="{% static 'images/logo.png' %}" class="logo-img">
+        <h2 class="logo-text">Smart<span>Analytics</span></h2>
+    </div>
+
+    <hr class="divider">
+<ul class="menu">
+
+    <li class="{% if not show_upload_section %}active{% endif %}" onclick="showSection('dashboard', this)">
+    <i data-lucide="layout-dashboard"></i> Dashboard
+</li>
+
+<li class="{% if show_upload_section %}active{% endif %}" onclick="showSection('upload', this)">
+    <i data-lucide="upload"></i> Upload Data
+</li>
+
+<li onclick="showSection('analytics', this)">
+    <i data-lucide="bar-chart-3"></i> Analytics
+</li>
+
+
+
+<li onclick="showSection('report', this)">
+    <i data-lucide="file-text"></i> Reports
+</li>
+
+<li onclick="showSection('activity', this)">
+    <i data-lucide="activity"></i> Recent Activity
+</li>
+
+<li onclick="showSection('alerts', this)">
+    <i data-lucide="bell"></i> Alerts & Notifications
+</li>
+
+<li onclick="showSection('settings', this)">
+    <i data-lucide="settings"></i> User Settings
+</li>
+
+</ul>
+
+<hr class="divider">
+
+<form method="POST" action="{% url 'logout' %}" class="logout-form">
+    {% csrf_token %}
+    <button type="submit" class="logout">
+        <i data-lucide="log-out"></i> Logout
+    </button>
+</form>
+</div>
+
+</div>
+
+<script>
+function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+
+    if (sidebar.style.left === "0px") {
+        sidebar.style.left = "-260px";
+    } else {
+        sidebar.style.left = "0px";
+    }
+}
+
+/* DATE TIME */
+function updateDateTime() {
+    const now = new Date();
+
+    const day = now.toLocaleDateString(undefined, { weekday: 'long' });
+    const date = now.toLocaleDateString(undefined, {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric'
+    });
+    const time = now.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+
+    document.getElementById("datetime-info").innerHTML =
+        `${day}, ${date} | ${time}`;
+}
+
+updateDateTime();
+setInterval(updateDateTime, 1000);
+
+document.addEventListener("click", function(e) {
+    const sidebar = document.getElementById("sidebar");
+    const menuBtn = document.querySelector(".menu-btn");
+
+    if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
+        sidebar.style.left = "-260px";
+        isOpen = false;
+    }
+});
+function showSection(sectionId, element) {
+
+    // Hide all sections
+    document.querySelectorAll(".section").forEach(sec => {
+        sec.classList.remove("active-section");
+    });
+
+    // Show selected section
+    document.getElementById(sectionId).classList.add("active-section");
+
+    // Remove active from all menu
+    document.querySelectorAll(".menu li").forEach(li => {
+        li.classList.remove("active");
+    });
+
+    // Add active to clicked
+    element.classList.add("active");
+}
+function togglePassword(fieldId, icon) {
+    const input = document.getElementById(fieldId);
+
+    if (input.type === "password") {
+        input.type = "text";
+        icon.textContent = "🙈";  // change icon
+    } else {
+        input.type = "password";
+        icon.textContent = "👁";
+    }
+}
+function previewImage(event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById("preview-image");
+    const text = document.getElementById("preview-text");
+    const fileName = document.getElementById("file-name");
+
+    if (file) {
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = "block";
+        if (text) text.style.display = "none";
+
+        fileName.textContent = file.name; // 🔥 show file name
+    }
+}
+
+function checkStrength() {
+    const password = document.getElementById("new_password").value;
+    const bar = document.getElementById("strength-bar");
+    const text = document.getElementById("strength-text");
+
+    let strength = 0;
+
+    if (password.length > 8) strength += 1;
+    if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength += 1;
+    if (password.match(/\d/)) strength += 1;
+    if (password.match(/[@$!%*?&]/)) strength += 1;
+
+    if (password.length === 0) {
+        bar.style.width = "0%";
+        text.innerHTML = "";
+        return;
+    }
+
+    if (strength <= 1) {
+        bar.style.width = "33%";
+        bar.style.background = "#ef4444"; // red
+        text.innerHTML = "Weak";
+        text.style.color = "#ef4444";
+    }
+    else if (strength == 2 || strength == 3) {
+        bar.style.width = "66%";
+        bar.style.background = "#f59e0b"; // yellow
+        text.innerHTML = "Medium";
+        text.style.color = "#f59e0b";
+    }
+    else {
+        bar.style.width = "100%";
+        bar.style.background = "#22c55e"; // green
+        text.innerHTML = "Strong";
+        text.style.color = "#22c55e";
+    }
+}
+
+function showFileName() {
+    const input = document.getElementById("fileInput");
+    const label = document.getElementById("fileLabel");
+
+    if (input.files.length > 0) {
+        label.innerText = input.files[0].name;
+    }
+}
+
+function validateUpload() {
+    const fileInput = document.getElementById("fileInput");
+
+    if (!fileInput.value) {
+        alert("⚠️ Please upload a file first!");
+        return false; // ❌ stops form submission
+    }
+
+    return true; // ✅ allow upload
+}
+lucide.createIcons();
+</script>
+<!-- ========================= -->
+<!-- 🔥 DJANGO DATA -->
+<!-- ========================= -->
+<script id="sales-data" type="application/json">
+{{ sales_over_time|safe }}
+</script>
+
+<script id="product-data" type="application/json">
+{{ top_products|safe }}
+</script>
+
+<script id="category-data" type="application/json">
+{{ category_data|safe }}
+</script>
+
+<script id="tax-data" type="application/json">
+{{ tax_data|safe }}
+</script>
+
+<!-- ========================= -->
+<!-- 📊 CHART.JS -->
+<!-- ========================= -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- ========================= -->
+<!-- 🚀 FINAL SCRIPT -->
+<!-- ========================= -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const salesData = JSON.parse(document.getElementById('sales-data').textContent || "[]");
+    const productData = JSON.parse(document.getElementById('product-data').textContent || "[]");
+    const categoryData = JSON.parse(document.getElementById('category-data').textContent || "[]");
+    const taxData = JSON.parse(document.getElementById('tax-data').textContent || "[]");
+
+    // =========================
+    // 📈 SALES (LINE)
+    // =========================
+        if (salesData.length > 0) {
+
+    const ctx = document.getElementById('salesChart').getContext('2d');
+
+    // 🔥 CREATE GRADIENT
+    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, 'rgba(59,130,246,0.9)');
+    gradient.addColorStop(0.5, 'rgba(139,92,246,0.6)');
+    gradient.addColorStop(1, 'rgba(236,72,153,0.2)');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: salesData.map(x => x.month),
+            datasets: [{
+                data: salesData.map(x => x.revenue),
+                borderColor: '#3b82f6',
+                backgroundColor: gradient, // ✅ gradient applied
+                fill: true,
+                tension: 0.4,
+                pointRadius: 4,
+                pointHoverRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+}
+
+    // =========================
+    // 📊 PRODUCTS (SCROLLABLE)
+    // =========================
+        if (productData.length > 0) {
+
+    const canvas = document.getElementById('productChart');
+
+    // 🔥 SET REAL CANVAS SIZE (NOT style)
+    const widthPerBar = 80;
+    canvas.width = productData.length * widthPerBar;  // ✅ FIX
+    canvas.height = 350;
+
+    // 🔥 AUTO COLORS (no repeat issue)
+    const colors = productData.map((_, i) => {
+        const palette = [
+            '#22c55e', '#c522ad', '#2263c5',
+            '#a522c5', '#afc522', '#e70d0d',
+            '#e9370e', '#22c5c0'
+        ];
+        return palette[i % palette.length];
+    });
+
+    new Chart(canvas, {
+        type: 'bar',
+        data: {
+            labels: productData.map(x => x.product),
+            datasets: [{
+                data: productData.map(x => x.revenue),
+                backgroundColor: colors,
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: false,              // ✅ MUST
+            maintainAspectRatio: false,
+
+            interaction: {
+                mode: 'nearest',            // ✅ FIX hover
+                axis: 'x',
+                intersect: false
+            },
+
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    enabled: true
+                }
+            },
+
+            scales: {
+                x: {
+                    ticks: {
+                        color: '#cbd5f5',
+                        autoSkip: false     // ✅ show all labels
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: '#cbd5f5'
+                    }
+                }
+            }
+        }
+    });
+}
+
+
+    // =========================
+    // 🥧 CATEGORY (PIE + HOVER ZOOM)
+    // =========================
+       if (categoryData.length > 0) {
+
+    new Chart(document.getElementById('categoryChart'), {
+        type: 'pie',
+        data: {
+            labels: categoryData.map(x => x.category),
+            datasets: [{
+                data: categoryData.map(x => x.revenue),
+                backgroundColor: [
+                    '#3b82f6','#22c55e','#f97316',
+                    '#a855f7','#ef4444','#14b8a6'
+                ],
+                borderWidth: 0   // 🔥 REMOVE ALL BORDERS
+            }]
+        },
+        options: {
+            responsive: true,
+
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',   // ✔ legend on top
+                    labels: {
+                        color: '#ffffff',
+                        boxWidth: 12,
+                        padding: 12
+                    }
+                },
+
+                plugins: {
+    legend: {
+        position: 'top',
+        labels: {
+            color: '#ffffff',
+            padding: 12
+        }
+    },
+    tooltip: {
+        enabled: true,
+        mode: 'nearest',
+        intersect: true,
+        backgroundColor: '#0f172a',
+        titleColor: '#ffffff',
+        bodyColor: '#ffffff',
+        borderColor: '#3b82f6',
+        borderWidth: 1,
+
+        callbacks: {
+            label: function(context) {
+                return context.label + ": ₹" + context.raw;
+            }
+        }
+    }
+}
+            }
+        }
+    });
+}
+    // =========================
+    // 💰 TAX DISTRIBUTION
+    // =========================
+  if (taxData.length > 0) {
+
+    new Chart(document.getElementById('taxChart'), {
+        type: 'doughnut',
+        data: {
+            labels: taxData.map(x => x.category),
+            datasets: [{
+                data: taxData.map(x => x.tax),
+                backgroundColor: [
+                    '#f59e0b','#ef4444','#10b981',
+                    '#6366f1','#8b5cf6','#06b6d4'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            cutout: '60%',   // 🔥 nice thickness (not too fat, not too thin)
+
+            plugins: {
+                legend: {
+                    position: 'top',   // ✔ legend on top
+                    labels: {
+                        color: '#ffffff',
+                        padding: 12
+                    }
+                },
+
+                tooltip: {
+                    enabled: true,
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ": ₹" + context.raw;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,612 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!--css-->
+<style>
+/* HERO SECTION */
+
+.features-hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 80px;
+}
+
+/* LEFT */
+.features-left {
+    width: 50%;
+}
+
+/* TAG */
+.features-tag {
+    color:#9b08c4;
+    font-size: 20px;
+    font-weight:bold;
+    letter-spacing: 2px;
+}
+
+/* HEADING */
+.features-left h1 {
+    font-size: 42px;
+    margin: 15px 0;
+    color: #f1f5f9;
+}
+
+.text-purple {
+    color:purple;
+    text-weight: bold;
+    
+}
+
+.text-blue {
+    color:blue;
+    text-weight: bold;
+    
+}
+.text-orange {
+    color: orange;
+    text-weight: bold;
+    
+}
+
+/* PARAGRAPH */
+.features-left p {
+    color: #94a3b8;
+    line-height: 1.6;
+    max-width: 500px;
+}
+
+/* LINE */
+.hero-line {
+    width: 60px;
+    height: 3px;
+    background: #9b08c4;
+    margin-top: 20px;
+}
+
+/* RIGHT */
+.features-right {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+/* DASHBOARD BOX */
+.dashboard-box {
+    width: 550px;
+    background: #1e293b;
+    border-radius: 20px;
+    padding: 10px;
+    position: relative;
+}
+
+/* GLOW BORDER */
+.dashboard-box::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 1px;
+    background: linear-gradient(120deg, #8b5cf6, #3b82f6, #f97316);
+
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+}
+
+/* IMAGE */
+.dashboard-img {
+    width: 100%;
+    border-radius: 15px;
+}
+/* SECTION */
+.section-header{ display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* GRADIENT LINES */
+.line {
+    flex: 1;
+    height: 2px;
+
+    background: linear-gradient(90deg, transparent, #8b5cf6, #3b82f6, orange, transparent);
+
+    opacity: 0.8;
+}
+.core-features {
+    padding: 80px;
+}
+
+/* GRID */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 25px;
+    margin-top: 50px;
+}
+
+/* CARD */
+.feature-card {
+    background: #1e293b;
+    padding: 25px;
+    border-radius: 16px;
+    text-align: center;
+    transition: 0.3s;
+    border: 1px solid transparent;
+}
+
+/* ICON */
+.feature-card {
+    background: #1e293b;
+    padding: 30px 25px;
+    border-radius: 18px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: 0.4s ease;
+}
+
+/* GRADIENT BORDER (PREMIUM) */
+.feature-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    padding: 1px;
+    background: linear-gradient(120deg, #8b5cf6, #3b82f6, #f97316);
+
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+
+    opacity: 0.3;
+}
+
+
+/* ICON BOX (SQUARE GLOW) */
+.icon-box {
+    width: 65px;
+    height: 65px;
+    border-radius: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 20px;
+
+    position: relative;
+    background: rgba(255,255,255,0.02);
+    backdrop-filter: blur(8px);
+
+    transition: 0.3s;
+}
+
+/* ICON SIZE */
+.icon-box i {
+    width: 28px;
+    height: 28px;
+}
+
+/* ICON CONTAINER (NEW) */
+.feature-card i {
+    padding: 12px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.02);
+    backdrop-filter: blur(6px);
+}
+
+/* TITLE */
+.feature-card h3 {
+    color: #f1f5f9;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* TEXT */
+.feature-card p {
+    color: #94a3b8;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* HOVER */
+.feature-card:hover {
+    transform: translateY(-8px);
+}
+/* PURPLE */
+.feature-card.purple .icon-box {
+    border: 1px solid #8b5cf6;
+    color: #8b5cf6;
+    box-shadow:
+        0 0 15px rgba(139, 92, 246, 0.5),
+        inset 0 0 10px rgba(139, 92, 246, 0.3);
+}
+
+/* BLUE */
+.feature-card.blue .icon-box {
+    border: 1px solid #3b82f6;
+    color: #3b82f6;
+    box-shadow:
+        0 0 15px rgba(59, 130, 246, 0.5),
+        inset 0 0 10px rgba(59, 130, 246, 0.3);
+}
+
+/* ORANGE */
+.feature-card.orange .icon-box {
+    border: 1px solid #f97316;
+    color: #f97316;
+    box-shadow:
+        0 0 15px rgba(249, 115, 22, 0.5),
+        inset 0 0 10px rgba(249, 115, 22, 0.3);
+}
+
+/* GREEN */
+.feature-card.green .icon-box {
+    border: 1px solid #22c55e;
+    color: #22c55e;
+    box-shadow:
+        0 0 15px rgba(34, 197, 94, 0.5),
+        inset 0 0 10px rgba(34, 197, 94, 0.3);
+}
+
+/* RED */
+.feature-card.red .icon-box {
+    border: 1px solid #ef4444;
+    color: #ef4444;
+    box-shadow:
+        0 0 15px rgba(239, 68, 68, 0.5),
+        inset 0 0 10px rgba(239, 68, 68, 0.3);
+}
+
+/* PINK */
+.feature-card.pink .icon-box {
+    border: 1px solid #ec4899;
+    color: #ec4899;
+    box-shadow:
+        0 0 15px rgba(236, 72, 153, 0.5),
+        inset 0 0 10px rgba(236, 72, 153, 0.3);
+}
+/* COLORS */
+
+/* PURPLE */
+.feature-card.purple {
+    border-color: #8b5cf6;
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+    color: #8b5cf6;
+}
+
+/* BLUE */
+.feature-card.blue {
+    border-color: #3b82f6;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+}
+
+/* ORANGE */
+.feature-card.orange {
+    border-color: #f97316;
+    box-shadow: 0 0 15px rgba(249, 115, 22, 0.2);
+    color: #f97316;
+}
+
+/* GREEN */
+.feature-card.green {
+    border-color: #22c55e;
+    box-shadow: 0 0 15px rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+/* RED */
+.feature-card.red {
+    border-color: #ef4444;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+/* PINK */
+.feature-card.pink {
+    border-color: #ec4899;
+    box-shadow: 0 0 15px rgba(236, 72, 153, 0.2);
+    color: #ec4899;
+}
+
+.everything-section {
+    padding: 20px;
+}
+
+/* ROW */
+.everything-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 50px;
+    gap: 20px; /* IMPORTANT (fix spacing issue) */
+}
+
+/* ITEM */
+.everything-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    position: relative;
+}
+/* CTA SECTION */
+/* CTA BOX */
+.cta-clean {
+    max-width: 900px;
+    margin: 80px auto;          /* center + spacing */
+    padding: 50px 40px;
+
+    text-align: center;
+
+    background: linear-gradient(120deg, #ec4899, #8b5cf6, #3b82f6, #f97316);
+    border-radius: 18px;
+
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+
+/* HEADING */
+.cta-clean h2 {
+    font-size: 28px;
+    color: white;
+}
+
+/* OPTIONAL HIGHLIGHT */
+.cta-clean h2 span {
+    font-weight: bold;
+}
+
+/* TEXT */
+.cta-clean p {
+    color: #e2e8f0;
+    margin: 15px 0 25px;
+    font-size: 15px;
+}
+
+/* BUTTON */
+.cta-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #0f172a;     /* dark button for contrast */
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+/* HOVER */
+.cta-btn:hover {
+    background: #d60af5;
+    box-shadow: 0 0 15px rgba(255,255,255,0.3);
+}
+
+</style>
+<!--html-->
+<div class="features-hero">
+
+    <!-- LEFT -->
+    <div class="features-left">
+
+        <span class="features-tag">FEATURES</span>
+
+        <h1>
+            Powerful Features for <br>
+            <span class="text-purple">Smarter</span> 
+            <span class="text-blue">Business</span> 
+            <span class="text-orange">Decisions</span>
+        </h1>
+
+        <p>
+            SmartAnalytics provides a complete suite of tools to help you 
+            analyze your data, discover valuable insights, predict future trends, 
+            and accelerate your business growth.
+        </p>
+
+        <div class="hero-line"></div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="features-right">
+
+        <div class="dashboard-box">
+            <img src="{% static 'images/dashboard.png' %}" class="dashboard-img">
+        </div>
+
+    </div>
+
+</div>
+<div class="core-features">
+
+    <!-- TITLE -->
+    <div class="section-header">
+    <div class="line"></div>
+
+    <h2 class="how-title">Our Core Features</h2>
+
+    <div class="line"></div>
+</div>
+
+    <div class="features-grid">
+
+        <!-- 1 -->
+        <div class="feature-card purple">
+    
+    <div class="icon-box">
+        <i data-lucide="bar-chart-3"></i>
+    </div>
+            <h3>Data Analytics</h3>
+            <p>Analyze your raw data with powerful tools and uncover hidden patterns and insights.</p>
+           
+        </div>
+
+        <!-- 2 -->
+        <div class="feature-card blue">
+             <div class="icon-box">
+            <i data-lucide="trending-up"></i></div>
+            <h3>Interactive Charts</h3>
+            <p>Beautiful, interactive charts and graphs to visualize your data in real-time.</p>
+            
+        </div>
+
+        <!-- 3 -->
+        <div class="feature-card purple">
+             <div class="icon-box">
+            <i data-lucide="brain"></i></div>
+            <h3>Prediction System</h3>
+          <p>AI/ML models that predict future trends and help you stay ahead.</p>
+        </div>
+
+        <!-- 4 -->
+        <div class="feature-card green">
+             <div class="icon-box">
+            <i data-lucide="file-text"></i></div>
+            <h3>Reports & Export</h3>
+            <p>Generate and download professional reports in PDF,CSV and Excel.</p>
+           
+        </div>
+
+        <!-- 5 -->
+        <div class="feature-card orange">
+             <div class="icon-box">
+            <i data-lucide="bell"></i></div>
+            <h3>Alerts & Notifications</h3>
+            <p>Get instant alerts and notifications for important changes and insights.</p>
+          
+        </div>
+
+        <!-- 6 -->
+        <div class="feature-card pink">
+             <div class="icon-box">
+            <i data-lucide="upload"></i></div>
+            <h3>Upload & Manage Data</h3>
+            <p> Easily upload, clean, and manage your CSV & Excel data files easily and securely.</p>
+         
+        </div>
+
+        <!-- 7 -->
+        <div class="feature-card blue">
+             <div class="icon-box">
+            <i data-lucide="users"></i></div>
+            <h3>User Management</h3>
+            <p>Manage users, roles and permissions for your team efficiently.</p>
+            
+        </div>
+
+        <!-- 8 -->
+        <div class="feature-card red">
+             <div class="icon-box">
+            <i data-lucide="shield-check"></i></div>
+            <h3>Data Security</h3>
+            <p>Your data is protected with enterprise-grade security and privacy standards.</p>
+          
+        </div>
+
+        <!-- 9 -->
+        <div class="feature-card purple">
+             <div class="icon-box">
+            <i data-lucide="target"></i></div>
+            <h3>Smart Recommendations</h3>
+            <p>AI suggestions and recommendations to improve growth.</p>
+         
+        </div>
+
+        <!-- 10 -->
+        <div class="feature-card orange">
+             <div class="icon-box">
+            <i data-lucide="smartphone"></i></div>
+            <h3>Responsive Design</h3>
+            <p>Access your analytics dashboard on any device anytime, anywhere.</p>
+           
+        </div>
+
+    </div>
+
+</div>
+
+<div class="everything-wrapper">
+
+    <div class="everything-section">
+
+        <div class="section-header">
+            <span class="line"></span>
+            <h2>Everything You Need in One Platform</h2>
+            <span class="line"></span>
+        </div>
+
+        <div class="everything-row">
+
+            <div class="feature-card orange">
+                <div class="icon-box">
+                <i data-lucide="zap"></i></div>
+                <div>
+                    <h4>Real-time Insights</h4>
+                    <p>Get real-time insights to make faster decisions.</p>
+                </div>
+            </div>
+
+            <div class="feature-card blue">
+                <div class="icon-box">
+                <i data-lucide="target"></i></div>
+                <div>
+                    <h4>Accuracy & Precision</h4>
+                    <p>Advanced algorithms ensure accurate analysis.</p>
+                </div>
+            </div>
+
+            <div class="feature-card purple">
+                <div class="icon-box">
+                <i data-lucide="clock"></i></div>
+                <div>
+                    <h4>Save Time</h4>
+                    <p>Automate analysis and save time.</p>
+                </div>
+            </div>
+
+            <div class="feature-card green">
+                <div class="icon-box">
+                <i data-lucide="trending-up"></i></div>
+                <div>
+                    <h4>Drive Growth</h4>
+                    <p>Boost your business growth.</p>
+                </div>
+            </div>
+
+            <div class="feature-card pink">
+                <div class="icon-box">
+                <i data-lucide="star"></i></div>
+                <div>
+                    <h4>Easy to Use</h4>
+                    <p>Simple and user-friendly interface.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div class="cta-clean">
+
+    <h2>
+        Ready to Transform Your 
+        <span>Data into Insights?</span>
+    </h2>
+
+    <p>
+        Unlock powerful analytics tools and make smarter decisions faster with SmartAnalytics.Start exploring your data today and take your 
+        business to the next level.
+    </p>
+
+    <a href="{% url 'signup' %}" class="cta-btn">Explore Dashboard</a>
+
+</div>
+{% endblock %}

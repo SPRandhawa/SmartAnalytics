@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .blog-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    color: #f1f5f9;
+}
+
+.blog-container h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #94a3b8;
+    margin-bottom: 30px;
+}
+
+/* ========================= */
+/* LIST STYLE */
+/* ========================= */
+.blog-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ========================= */
+/* POST CARD */
+/* ========================= */
+.blog-post {
+    background: linear-gradient(145deg, #1e293b, #0f172a);
+    padding: 22px;
+    border-radius: 14px;
+    transition: 0.3s;
+}
+
+.blog-post:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+}
+
+/* ========================= */
+/* TEXT */
+/* ========================= */
+.blog-post h2 {
+    font-size: 20px;
+    margin-bottom: 6px;
+}
+
+.blog-date {
+    font-size: 12px;
+    color: #94a3b8;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.blog-post p {
+    font-size: 15px;
+    color: #cbd5f5;
+    line-height: 1.6;
+}
+</style>
+<div class="blog-container">
+
+    <h1>📝 Blog</h1>
+    <p class="subtitle">Insights, updates, and data-driven stories</p>
+
+    <div class="blog-list">
+
+        <!-- POST 1 -->
+        <div class="blog-post">
+            <h2>📊 How Data Analytics Helps Businesses Grow</h2>
+            <span class="blog-date">July 2026</span>
+            <p>
+                Data analytics helps businesses understand customer behavior,
+                optimize operations, and increase profitability.
+                By analyzing trends, companies can make smarter decisions
+                and stay ahead of competitors.
+            </p>
+        </div>
+
+        <!-- POST 2 -->
+        <div class="blog-post">
+            <h2>🤖 AI in Data Analysis (Gemini Integration)</h2>
+            <span class="blog-date">July 2026</span>
+            <p>
+                AI-powered tools like Gemini can automatically generate insights
+                from raw datasets. This reduces manual effort and provides
+                actionable intelligence in seconds.
+            </p>
+        </div>
+
+        <!-- POST 3 -->
+        <div class="blog-post">
+            <h2>📈 Understanding Sales Trends with Charts</h2>
+            <span class="blog-date">July 2026</span>
+            <p>
+                Charts such as line, bar, and pie graphs make it easier to
+                visualize sales trends. They help identify patterns,
+                seasonal spikes, and performance gaps quickly.
+            </p>
+        </div>
+
+        <!-- POST 4 -->
+        <div class="blog-post">
+            <h2>🚀 Building SmartAnalytics Dashboard</h2>
+            <span class="blog-date">July 2026</span>
+            <p>
+                SmartAnalytics combines Django, Pandas, and Chart.js
+                to build an interactive dashboard. Adding AI insights
+                takes it to the next level by automating analysis.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
