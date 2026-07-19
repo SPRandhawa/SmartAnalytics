@@ -26,11 +26,7 @@ SECRET_KEY = 'django-insecure-x-j$j1*-0gup9393&yw-0md-jh7(+gg#-7khrb*pv6mpj5cknh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    "smartanalytics-mfmu.onrender.com",
-    "localhost",
-    "127.0.0.1",
-]
+ALLOWED_HOSTS = ["smartanalytics-mfmu.onrender.com"]
 
 
 # Application definition
