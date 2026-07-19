@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .docs-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    color: #f1f5f9;
+}
+
+.docs-container h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #94a3b8;
+    margin-bottom: 30px;
+}
+
+/* ========================= */
+/* 📦 CARD */
+/* ========================= */
+.docs-card {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    transition: 0.3s;
+}
+
+.docs-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* ========================= */
+/* HEADINGS */
+/* ========================= */
+.docs-card h2 {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+/* ========================= */
+/* LIST */
+/* ========================= */
+.docs-card ul {
+    padding-left: 20px;
+}
+
+.docs-card li {
+    margin-bottom: 6px;
+}
+
+/* ========================= */
+/* WARNING CARD */
+/* ========================= */
+.docs-card.warning {
+    border-left: 4px solid #ef4444;
+}
+</style>
+<div class="docs-container">
+
+    <h1>📘 Documentation</h1>
+    <p class="subtitle">Learn how to use SmartAnalytics step-by-step</p>
+
+    <!-- ========================= -->
+    <!-- 🚀 Getting Started -->
+    <!-- ========================= -->
+    <div class="docs-card">
+        <h2>🚀 Getting Started</h2>
+        <ul>
+            <li>Go to Dashboard</li>
+            <li>Upload your dataset (CSV / Excel)</li>
+            <li>Wait for processing</li>
+            <li>View analytics instantly</li>
+        </ul>
+    </div>
+
+    <!-- ========================= -->
+    <!-- 📂 Upload Dataset -->
+    <!-- ========================= -->
+    <div class="docs-card">
+        <h2>📂 Upload Dataset</h2>
+        <p>Your dataset should contain:</p>
+        <ul>
+            <li><b>Product</b> – Product name</li>
+            <li><b>Category</b> – Product category</li>
+            <li><b>Revenue</b> – Sales amount</li>
+            <li><b>Expense</b> – Cost</li>
+            <li><b>Tax</b> – Tax applied</li>
+            <li><b>Date</b> – Transaction date</li>
+        </ul>
+    </div>
+
+    <!-- ========================= -->
+    <!-- 📊 Dashboard Features -->
+    <!-- ========================= -->
+    <div class="docs-card">
+        <h2>📊 Dashboard Features</h2>
+        <ul>
+            <li>📈 Sales Over Time (Line Chart)</li>
+            <li>📊 Top Products (Scrollable Bar Chart)</li>
+            <li>🥧 Category Distribution (Pie Chart)</li>
+            <li>💰 Tax Distribution (Doughnut Chart)</li>
+            <li>🧠 AI Insights (Gemini Powered)</li>
+        </ul>
+    </div>
+
+    <!-- ========================= -->
+    <!-- 🤖 AI Insights -->
+    <!-- ========================= -->
+    <div class="docs-card">
+        <h2>🤖 AI Insights</h2>
+        <p>
+            The system uses Google Gemini AI to automatically generate insights
+            from your dataset.
+        </p>
+        <ul>
+            <li>Find top-performing products</li>
+            <li>Detect revenue trends</li>
+            <li>Identify business opportunities</li>
+        </ul>
+    </div>
+
+    <!-- ========================= -->
+    <!-- 🕒 Recent Activity -->
+    <!-- ========================= -->
+    <div class="docs-card">
+        <h2>🕒 Recent Activity</h2>
+        <p>
+            All uploaded datasets are stored temporarily in your recent activity.
+        </p>
+        <ul>
+            <li>Click any dataset → load into dashboard</li>
+            <li>Delete unwanted datasets</li>
+            <li>Data resets on logout</li>
+        </ul>
+    </div>
+
+    <!-- ========================= -->
+    <!-- ⚠️ Notes -->
+    <!-- ========================= -->
+    <div class="docs-card warning">
+        <h2>⚠️ Important Notes</h2>
+        <ul>
+            <li>Upload clean datasets for best results</li>
+            <li>Column names should match required format</li>
+            <li>Large files may take time to process</li>
+        </ul>
+    </div>
+
+</div>
+
+{% endblock %}
