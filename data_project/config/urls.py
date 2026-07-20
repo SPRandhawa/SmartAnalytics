@@ -27,7 +27,10 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('upload/', include('data_upload.urls')),
-    path('accounts/', include('accounts.urls')),
-    path('accounts/password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
-    path('upload/', include('data_upload.urls')),
+
+    path(
+        'accounts/password_reset/',
+        auth_views.PasswordResetView.as_view(),
+        name='password_reset'
+    ),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
