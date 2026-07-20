@@ -725,8 +725,7 @@ def dashboard(request):
     }
     context['alerts'] = alerts
     return render(request, 'dashboard/dashboard.html', context)
-    'data_preview': data_preview,
-    'columns': columns
+    
 # =========================
 # PDF DOWNLOAD VIEW (ADDED)
 # =========================
