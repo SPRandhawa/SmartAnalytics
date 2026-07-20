@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages 
-
+from .models import ContactMessage
 def home(request):
     return render(request, 'pages/home.html')
 
@@ -11,8 +11,8 @@ def about(request):
 def features(request):
     return render(request, 'pages/features.html')
 
-from django.shortcuts import render, redirect
-from .models import ContactMessage
+
+
 
 def contact(request):
     if request.method == 'POST':
