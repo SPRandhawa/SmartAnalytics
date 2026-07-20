@@ -675,61 +675,47 @@ report_data = normalize_report_data({
 
 request.session['report_data'] = report_data
 
-# =========================
-# 📌 RECENT ACTIVITY
-# =========================
-seen = set()
-activities = []
+    # =========================
+    # 📌 RECENT ACTIVITY
+    # =========================
+    seen = set()
+    activities = []
 
-datasets = UploadedDataset.objects.filter(user=request.user).order_by('-uploaded_at')
+    datasets = UploadedDataset.objects.filter(user=request.user).order_by('-uploaded_at')
 
-for data in datasets:
+    for data in datasets:
+        activity_file_name = os.path.basename(data.file.name)
 
-    # 🔹 Extract filename (remove full path)
-    activity_file_name = os.path.basename(data.file.name)
+        if "_" in activity_file_name:
+            name_part = activity_file_name.rsplit("_", 1)[0]
+            extension = activity_file_name.split(".")[-1]
+            clean_name = f"{name_part}.{extension}"
+        else:
+            clean_name = activity_file_name
 
-    # 🔹 Remove random Django suffix (_abc123)
-    if "_" in activity_file_name:
-        name_part = activity_file_name.rsplit("_", 1)[0]   # split from RIGHT
-        extension = activity_file_name.split(".")[-1]
-        clean_name = f"{name_part}.{extension}"
-    else:
-        clean_name = activity_file_name
+        if clean_name not in seen:
+            seen.add(clean_name)
 
-    # 🔹 Remove duplicates
-    if clean_name not in seen:
-        seen.add(clean_name)
+            activities.append({
+                "text": clean_name,
+                "time": data.uploaded_at.strftime("%d %b %Y, %I:%M %p"),
+                "id": data.id
+            })
 
-        activities.append({
-            "text": clean_name,
-            "time": data.uploaded_at.strftime("%d %b %Y, %I:%M %p"),
-            "id": data.id
-        })
+    alerts = []
 
+    if net_profit < 0:
+        alerts.append({"type": "danger", "text": "Net loss detected"})
+    elif net_profit > 0:
+        alerts.append({"type": "success", "text": "Business is profitable"})
 
-# =========================
-# 🚨 ALERTS (OUTSIDE LOOP)
-# =========================
-alerts = []
+    if growth_rate < 0:
+        alerts.append({"type": "warning", "text": "Revenue dropped from last month"})
+    elif growth_rate > 10:
+        alerts.append({"type": "success", "text": f"Revenue increased by {round(growth_rate,2)}%"})
 
-# BUSINESS ALERTS
-if net_profit < 0:
-    alerts.append({"type": "danger", "text": "Net loss detected"})
-elif net_profit > 0:
-    alerts.append({"type": "success", "text": "Business is profitable"})
-
-# GROWTH ALERT
-if growth_rate < 0:
-    alerts.append({"type": "warning", "text": "Revenue dropped from last month"})
-elif growth_rate > 10:
-    alerts.append({"type": "success", "text": f"Revenue increased by {round(growth_rate,2)}%"})
-
-# DATA ALERT
-if df is not None:
-    if df.isnull().sum().sum() > 0:
+    if df is not None and df.isnull().sum().sum() > 0:
         alerts.append({"type": "warning", "text": "Dataset contains missing values"})
-
-
 # =========================
 # CONTEXT
 # =========================
