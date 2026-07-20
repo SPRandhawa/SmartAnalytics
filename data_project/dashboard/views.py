@@ -5,6 +5,7 @@ from django.contrib.auth import update_session_auth_hash
 from datetime import datetime
 from accounts.models import Profile
 from .models import UploadedDataset
+from data_upload.models import UploadedFile
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import pandas as pd
@@ -347,6 +348,23 @@ def dashboard(request):
         "net_profit": 0,
         "summary": "No data available"
     }
+     # =========================
+    # ✅ ADD THIS PART HERE
+    # =========================
+    
+
+    latest_file = UploadedFile.objects.filter(user=request.user).last()
+
+    if latest_file:
+        file_path = latest_file.file.path
+
+        if file_path.endswith('.csv'):
+            df = pd.read_csv(file_path)
+        elif file_path.endswith('.xlsx'):
+            df = pd.read_excel(file_path)
+
+        data_preview = df.head(10).values.tolist()
+        columns = list(df.columns)
     # =========================
     # HANDLE POST (UPLOAD)
     # =========================
@@ -703,6 +721,8 @@ def dashboard(request):
         'summary': summary,
         'prediction': prediction,
         'future_predictions': future_predictions,
+        'data_preview': data_preview,
+        'columns': columns
 
     }
     context['alerts'] = alerts
