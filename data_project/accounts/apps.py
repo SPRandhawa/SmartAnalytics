@@ -1,5 +1,5 @@
 from django.apps import AppConfig
-   import os
+
 
 class AccountsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
@@ -8,8 +8,8 @@ class AccountsConfig(AppConfig):
     def ready(self):
         import accounts.signals
 
-        # ✅ SAFE PLACE TO CREATE SUPERUSER
-     
+        # ✅ SAFE SUPERUSER CREATION
+        import os
         if os.environ.get("CREATE_SUPERUSER") == "True":
             from django.contrib.auth.models import User
 
