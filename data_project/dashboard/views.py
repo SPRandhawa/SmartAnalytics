@@ -479,29 +479,29 @@ if latest_file:
                 user.set_password(new)
                 user.save()
                 update_session_auth_hash(request, user)
-# =========================
-# LOAD LAST UPLOADED FILE (SAFE)
-# =========================
-latest_file = UploadedFile.objects.filter(user=request.user).last()
+    # =========================
+    # LOAD LAST FILE (FIXED)
+    # =========================
+    latest_file = UploadedFile.objects.filter(user=request.user).last()
 
-if latest_file:
-    file_path = latest_file.file.path
+    if latest_file:
+        file_path = latest_file.file.path
 
-    try:
-        if file_path.endswith('.csv'):
-            df = pd.read_csv(file_path)
-        elif file_path.endswith('.xlsx'):
-            df = pd.read_excel(file_path)
-        else:
+        try:
+            if file_path.endswith('.csv'):
+                df = pd.read_csv(file_path)
+            elif file_path.endswith('.xlsx'):
+                df = pd.read_excel(file_path)
+            else:
+                df = None
+
+            if df is not None:
+                data_preview = df.head(10).values.tolist()
+                columns = list(df.columns)
+
+        except Exception as e:
+            print("LOAD ERROR:", e)
             df = None
-
-        if df is not None:
-            data_preview = df.head(10).values.tolist()
-            columns = list(df.columns)
-
-    except Exception as e:
-        print("LOAD ERROR:", e)
-        df = None
 
 # =========================
 # DEFAULT VALUES
