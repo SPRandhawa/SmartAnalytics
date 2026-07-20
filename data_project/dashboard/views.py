@@ -5,6 +5,7 @@ from django.contrib.auth import update_session_auth_hash
 from datetime import datetime
 from accounts.models import Profile
 from .models import UploadedDataset
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import pandas as pd
 import json
@@ -286,6 +287,7 @@ def build_chart_explanations(df):
             })
 
     return explanations
+@login_required
 def dashboard(request):
     user = request.user
 
