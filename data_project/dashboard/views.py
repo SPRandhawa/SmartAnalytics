@@ -721,12 +721,12 @@ def dashboard(request):
         'summary': summary,
         'prediction': prediction,
         'future_predictions': future_predictions,
-        'data_preview': data_preview,
-        'columns': columns
 
     }
     context['alerts'] = alerts
     return render(request, 'dashboard/dashboard.html', context)
+    'data_preview': data_preview,
+    'columns': columns
 # =========================
 # PDF DOWNLOAD VIEW (ADDED)
 # =========================
