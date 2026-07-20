@@ -305,7 +305,7 @@ def dashboard(request):
 
     # =========================
     # DEFAULT VALUES
-    # =========================
+    # =======================
     df = None
     data_preview = None
     columns = None
@@ -873,7 +873,7 @@ def reports(request):
 
     ai_insights = ensure_three_ai_insights(
         request.session.get('ai_insights'),
-        None,
+        request.session.get('report_data')
     )
 
     context = {
