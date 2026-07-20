@@ -5,8 +5,6 @@ from django.contrib.auth import update_session_auth_hash
 from datetime import datetime
 from accounts.models import Profile
 from .models import UploadedDataset
-from data_upload.models import UploadedFile
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import pandas as pd
 import json
@@ -21,6 +19,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from xml.sax.saxutils import escape
+from django.shortcuts import redirect
 
 def build_summary_text(df):
     if df is None:
@@ -31,25 +30,17 @@ def build_summary_text(df):
     summary_lines.append(f"Columns: {', '.join(df.columns.tolist())}")
 
     if 'Revenue' in df.columns:
-        revenue = pd.to_numeric(df['Revenue'], errors='coerce').fillna(0)
-        summary_lines.append(f"Revenue total: {revenue.sum():,.2f}")
-
+        summary_lines.append(f"Revenue total: {df['Revenue'].sum():,.2f}")
     if 'Expense' in df.columns:
-        expense = pd.to_numeric(df['Expense'], errors='coerce').fillna(0)
-        summary_lines.append(f"Expense total: {expense.sum():,.2f}")
-
+        summary_lines.append(f"Expense total: {df['Expense'].sum():,.2f}")
     if 'Tax' in df.columns:
-        tax = pd.to_numeric(df['Tax'], errors='coerce').fillna(0)
-        summary_lines.append(f"Tax total: {tax.sum():,.2f}")
-
+        summary_lines.append(f"Tax total: {df['Tax'].sum():,.2f}")
     if 'Date' in df.columns and 'Revenue' in df.columns:
         summary_lines.append("Date range and revenue trend are available for analysis.")
-
     if 'Category' in df.columns:
         summary_lines.append("Category breakdown is available for segmentation analysis.")
 
     return "\n".join(summary_lines)
-
 
 def normalize_report_data(data):
     if not data:
@@ -71,7 +62,6 @@ def normalize_report_data(data):
             normalized[key] = value
 
     return normalized
-    
 def build_ai_insights(df):
     if df is None:
         return [
@@ -81,11 +71,9 @@ def build_ai_insights(df):
         ]
 
     insights = []
-
     if 'Revenue' in df.columns and 'Expense' in df.columns:
-        revenue_total = float(pd.to_numeric(df['Revenue'], errors='coerce').fillna(0).sum())
-        expense_total = float(pd.to_numeric(df['Expense'], errors='coerce').fillna(0).sum())
-
+        revenue_total = float(df['Revenue'].sum())
+        expense_total = float(df['Expense'].sum())
         if revenue_total >= expense_total:
             insights.append("Revenue is currently outpacing expenses, which is a strong signal.")
         else:
@@ -96,10 +84,7 @@ def build_ai_insights(df):
     if 'Date' in df.columns and 'Revenue' in df.columns:
         df_copy = df.copy()
         df_copy['Date'] = pd.to_datetime(df_copy['Date'], errors='coerce')
-        df_copy['Revenue'] = pd.to_numeric(df_copy['Revenue'], errors='coerce').fillna(0)
-
         monthly_revenue = df_copy.groupby(df_copy['Date'].dt.to_period('M'))['Revenue'].sum()
-
         if len(monthly_revenue) >= 2:
             if monthly_revenue.iloc[-1] >= monthly_revenue.iloc[-2]:
                 insights.append("Revenue is trending upward across recent periods.")
@@ -110,14 +95,12 @@ def build_ai_insights(df):
     else:
         insights.append("Add date-based data to uncover seasonal patterns.")
 
-    if 'Category' in df.columns and 'Revenue' in df.columns:
-        grouped = df.groupby('Category')['Revenue'].sum().dropna()
-        if not grouped.empty:
-            insights.append(f"Your strongest category is {grouped.idxmax()}.")
-    elif 'Product' in df.columns and 'Revenue' in df.columns:
-        grouped = df.groupby('Product')['Revenue'].sum().dropna()
-        if not grouped.empty:
-            insights.append(f"Your best-selling product is {grouped.idxmax()}.")
+    if 'Category' in df.columns:
+        top_category = df.groupby('Category')['Revenue'].sum().idxmax() if 'Revenue' in df.columns else 'N/A'
+        insights.append(f"Your strongest category is {top_category}.")
+    elif 'Product' in df.columns:
+        top_product = df.groupby('Product')['Revenue'].sum().idxmax() if 'Revenue' in df.columns else 'N/A'
+        insights.append(f"Your best-selling product is {top_product}.")
     else:
         insights.append("Use category or product data to find your strongest segments.")
 
@@ -303,7 +286,6 @@ def build_chart_explanations(df):
             })
 
     return explanations
-@login_required
 def dashboard(request):
     user = request.user
 
@@ -320,7 +302,7 @@ def dashboard(request):
 
     # =========================
     # DEFAULT VALUES
-    # =======================
+    # =========================
     df = None
     data_preview = None
     columns = None
@@ -363,30 +345,7 @@ def dashboard(request):
         "net_profit": 0,
         "summary": "No data available"
     }
-     # =========================
-    # ✅ ADD THIS PART HERE
     # =========================
-    latest_file = UploadedFile.objects.filter(user=request.user).last()
-
-if latest_file:
-    file_path = latest_file.file.path
-
-    try:
-        if file_path.endswith('.csv'):
-            df = pd.read_csv(file_path)
-        elif file_path.endswith('.xlsx'):
-            df = pd.read_excel(file_path)
-        else:
-            df = None  # ✅ FIX
-
-        if df is not None:  # ✅ FIX
-            data_preview = df.head(10).values.tolist()
-            columns = list(df.columns)
-
-    except Exception as e:
-        print("LOAD ERROR:", e)
-        df = None
-    #=====================
     # HANDLE POST (UPLOAD)
     # =========================
     if request.method == "POST":
@@ -479,202 +438,188 @@ if latest_file:
                 user.set_password(new)
                 user.save()
                 update_session_auth_hash(request, user)
+        # =========================
+    # LOAD LAST DATASET
     # =========================
-    # LOAD LAST FILE (FIXED)
-    # =========================
-    latest_file = UploadedFile.objects.filter(user=request.user).last()
+    temporary_dataset = False
+    selected_dataset_id = request.GET.get("dataset")
+    latest_dataset = None
+    df = None
 
-    if latest_file:
-        file_path = latest_file.file.path
+    # Selected dataset
+    if selected_dataset_id and selected_dataset_id.isdigit():
+        latest_dataset = UploadedDataset.objects.filter(
+            user=request.user,
+            id=int(selected_dataset_id),
+        ).first()
+        temporary_dataset = latest_dataset is not None
+
+    # Default dataset
+    if latest_dataset is None:
+        latest_dataset = UploadedDataset.objects.filter(
+            user=request.user
+        ).order_by('-uploaded_at').first()
+
+    # =========================
+    # DEFAULT VALUES
+    # =========================
+    file_name = ""
+    upload_time = None
+    columns = []
+    data_preview = []
+    total_revenue = 0
+    total_expense = 0
+    total_tax = 0
+    net_profit = 0
+    growth_text = "No data"
+    summary = "Upload a dataset to generate insights."
+    # =========================
+    # MAIN LOGIC
+    # =========================
+    if latest_dataset:
 
         try:
-            if file_path.endswith('.csv'):
-                df = pd.read_csv(file_path)
-            elif file_path.endswith('.xlsx'):
-                df = pd.read_excel(file_path)
-            else:
-                df = None
+            file_path = latest_dataset.file.path
 
+            # LOAD FILE
+            if latest_dataset.file.name.endswith('.csv'):
+                df = pd.read_csv(file_path)
+            else:
+                df = pd.read_excel(file_path)
+
+            # FILE INFO
+            file_name = os.path.basename(latest_dataset.file.name)
+            upload_time = latest_dataset.uploaded_at
+
+            # BASIC DATA
             if df is not None:
+                columns = df.columns.tolist()
                 data_preview = df.head(10).values.tolist()
-                columns = list(df.columns)
+
+            # KPI CALCULATIONS
+            if df is not None and all(col in df.columns for col in ['Revenue', 'Expense', 'Tax']):
+                total_revenue = df['Revenue'].sum()
+                total_expense = df['Expense'].sum()
+                total_tax = df['Tax'].sum()
+                net_profit = total_revenue - total_expense - total_tax
+
+            # SUMMARY
+            if df is not None:
+                summary = build_summary_text(df)
+
+            # =========================
+            # GROWTH CALCULATION
+            # =========================
+            if df is not None and 'Date' in df.columns and 'Revenue' in df.columns:
+
+                try:
+                    df_copy = df.copy()
+
+                    df_copy['Date'] = pd.to_datetime(df_copy['Date'], errors='coerce')
+                    df_copy = df_copy.dropna(subset=['Date'])
+
+                    df_copy['Month'] = df_copy['Date'].dt.to_period('M')
+                    monthly_revenue = df_copy.groupby('Month')['Revenue'].sum()
+
+                    if len(monthly_revenue) >= 2:
+                        current = monthly_revenue.iloc[-1]
+                        previous = monthly_revenue.iloc[-2]
+
+                        if previous != 0:
+                            growth_rate = ((current - previous) / previous) * 100
+                            growth_text = f"{round(growth_rate, 2)}% from last month"
+                        else:
+                            growth_text = "Previous month was zero"
+                    else:
+                        growth_text = "Not enough data"
+
+                except Exception as e:
+                    print("GROWTH ERROR:", e)
+                    growth_text = "Error calculating growth"
 
         except Exception as e:
             print("LOAD ERROR:", e)
-            df = None
-
-# =========================
-# DEFAULT VALUES
-# =========================
-file_name = ""
-upload_time = None
-columns = []
-data_preview = []
-total_revenue = 0
-total_expense = 0
-total_tax = 0
-net_profit = 0
-growth_text = "No data"
-summary = "Upload a dataset to generate insights."
-
-# =========================
-# MAIN LOGIC
-# =========================
-if latest_dataset:
-
-    try:
-        file_path = latest_dataset.file.path
-
-        # ✅ SAFE FILE LOAD
-        if latest_dataset.file.name.endswith('.csv'):
-            df = pd.read_csv(file_path)
-        elif latest_dataset.file.name.endswith('.xlsx'):
-            df = pd.read_excel(file_path)
-        else:
-            df = None  # ✅ FIX
-
-        # FILE INFO
-        file_name = os.path.basename(latest_dataset.file.name)
-        upload_time = latest_dataset.uploaded_at
-
-        # BASIC DATA
-        if df is not None:
-            columns = df.columns.tolist()
-            data_preview = df.head(10).values.tolist()
-
-        # KPI CALCULATIONS
-        if df is not None and all(col in df.columns for col in ['Revenue', 'Expense', 'Tax']):
-            total_revenue = df['Revenue'].sum()
-            total_expense = df['Expense'].sum()
-            total_tax = df['Tax'].sum()
-            net_profit = total_revenue - total_expense - total_tax
-
-        # SUMMARY
-        if df is not None:
-            summary = build_summary_text(df)
-
-    except Exception as e:
-        print("LOAD ERROR:", e)
-        df = None
     # =========================
-# GROWTH CALCULATION
-# =========================
-if df is not None and 'Date' in df.columns and 'Revenue' in df.columns:
-
-    try:
-        df_copy = df.copy()
-
-        df_copy['Date'] = pd.to_datetime(df_copy['Date'], errors='coerce')
-        df_copy = df_copy.dropna(subset=['Date'])
-
-        df_copy['Revenue'] = pd.to_numeric(df_copy['Revenue'], errors='coerce').fillna(0)  # ✅ FIX
-
-        df_copy['Month'] = df_copy['Date'].dt.to_period('M')
-        monthly_revenue = df_copy.groupby('Month')['Revenue'].sum().sort_index()  # ✅ FIX
-
-        if len(monthly_revenue) >= 2:
-            current = monthly_revenue.iloc[-1]
-            previous = monthly_revenue.iloc[-2]
-
-            if previous != 0:
-                growth_rate = ((current - previous) / previous) * 100
-                growth_text = f"{round(growth_rate, 2)}% from last month"
-            else:
-                growth_text = "Previous month was zero"
-        else:
-            growth_text = "Not enough data"
-
-    except Exception as e:
-        print("GROWTH ERROR:", e)
-        growth_text = "Error calculating growth"
-
-
-# =========================
-# CHART DATA
-# =========================
-if df is not None:
-    insights = build_smart_insights(df)
-    analytics_insights = build_analytics_insights(df)
-
-    if 'Date' in df.columns:
-        df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
-
-        df['Revenue'] = pd.to_numeric(df['Revenue'], errors='coerce').fillna(0)  # ✅ FIX
-
-        df['Month'] = df['Date'].dt.to_period('M')
-        monthly = df.groupby('Month')['Revenue'].sum().sort_index().reset_index()  # ✅ FIX
-
-        sales_over_time = [
-            {"month": row["Month"].strftime('%b %Y'), "revenue": float(row["Revenue"])}  # ✅ FIX
-            for _, row in monthly.iterrows()
-        ]
-
-    if 'Product' in df.columns:
-        products = df.groupby('Product')['Revenue'].sum().sort_values(ascending=False)
-
-        top_products = [
-            {"product": idx, "revenue": float(val)}
-            for idx, val in products.items()
-        ]
-
-    if 'Category' in df.columns:
-        categories = df.groupby('Category')['Revenue'].sum()
-
-        category_data = [
-            {"category": idx, "revenue": float(val)}
-            for idx, val in categories.items()
-        ]
-
-    if 'Category' in df.columns and 'Tax' in df.columns:
-        tax_group = df.groupby('Category')['Tax'].sum()
-
-        tax_data = [
-            {"category": idx, "tax": float(val)}
-            for idx, val in tax_group.items()
-        ]
-# =========================
-# AI INSIGHTS
-# =========================
-try:
+    # CHART DATA
+    # =========================
     if df is not None:
-        client = genai.Client()
+        insights = build_smart_insights(df)
+        analytics_insights = build_analytics_insights(df)
 
-        response = client.models.generate_content(
-            model="gemini-3.1-flash-lite",
-            contents=(
-                "Give exactly 3 short business insights based on this data.\n"
-                f"{df.head(5)}"
+        if 'Date' in df.columns:
+            df['Date'] = pd.to_datetime(df['Date'])
+            df['Month'] = df['Date'].dt.strftime('%b %Y')
+
+            monthly = df.groupby('Month')['Revenue'].sum().reset_index()
+
+            sales_over_time = [
+                {"month": row["Month"], "revenue": float(row["Revenue"])}
+                for _, row in monthly.iterrows()
+            ]
+
+        if 'Product' in df.columns:
+            products = df.groupby('Product')['Revenue'].sum().sort_values(ascending=False)
+
+            top_products = [
+                {"product": idx, "revenue": float(val)}
+                for idx, val in products.items()
+            ]
+
+        if 'Category' in df.columns:
+            categories = df.groupby('Category')['Revenue'].sum()
+
+            category_data = [
+                {"category": idx, "revenue": float(val)}
+                for idx, val in categories.items()
+            ]
+
+        if 'Category' in df.columns and 'Tax' in df.columns:
+            tax_group = df.groupby('Category')['Tax'].sum()
+
+            tax_data = [
+                {"category": idx, "tax": float(val)}
+                for idx, val in tax_group.items()
+            ]
+
+    # =========================
+    # AI INSIGHTS
+    # =========================
+    try:
+        if df is not None:
+            client = genai.Client()
+
+            response = client.models.generate_content(
+                model="gemini-3.1-flash-lite",
+                contents=(
+                    "Give exactly 3 short business insights based on this data. "
+                    "Put each insight on its own line. Use plain text only: no Markdown, "
+                    "asterisks, headings, bullets, or numbering.\n"
+                    f"{df.head(5)}"
+                )
             )
-        )
 
-        text = getattr(response, 'text', None)
-
-        if text:
-            ai_insights = [line.strip() for line in text.split("\n") if line.strip()]
+            text = getattr(response, 'text', None)
+            if text:
+                ai_insights = [line.strip() for line in text.split("\n") if line.strip()]
+            else:
+                ai_insights = build_ai_insights(df)
         else:
             ai_insights = build_ai_insights(df)
-    else:
+
+    except Exception:
         ai_insights = build_ai_insights(df)
 
-except Exception as e:
-    print("AI ERROR:", e)
-    ai_insights = build_ai_insights(df)
+    ai_insights = ensure_three_ai_insights(ai_insights, df)
+    chart_explanations = build_chart_explanations(df)
 
-ai_insights = ensure_three_ai_insights(ai_insights, df)
-chart_explanations = build_chart_explanations(df)
-
-request.session['ai_insights'] = ai_insights
-
-report_data = normalize_report_data({
-    **report_data,
-    "file_name": file_name or "Not available",
-    "uploaded_at": upload_time.strftime("%d %b %Y, %I:%M %p") if upload_time else "Not available",
-    "ai_insights": ai_insights,
-    "chart_explanations": chart_explanations,
-})
-
-request.session['report_data'] = report_data
-
+    request.session['ai_insights'] = ai_insights
+    report_data.update({
+        "file_name": file_name or "Not available",
+        "uploaded_at": upload_time.strftime("%d %b %Y, %I:%M %p") if upload_time else "Not available",
+        "ai_insights": ai_insights,
+        "chart_explanations": chart_explanations,
+    })
+    request.session['report_data'] = normalize_report_data(report_data)
     # =========================
     # 📌 RECENT ACTIVITY
     # =========================
@@ -684,15 +629,19 @@ request.session['report_data'] = report_data
     datasets = UploadedDataset.objects.filter(user=request.user).order_by('-uploaded_at')
 
     for data in datasets:
+
+        # 🔹 Extract filename (remove full path)
         activity_file_name = os.path.basename(data.file.name)
 
+        # 🔹 Remove random Django suffix (_abc123)
         if "_" in activity_file_name:
-            name_part = activity_file_name.rsplit("_", 1)[0]
+            name_part = activity_file_name.rsplit("_", 1)[0]   # split from RIGHT
             extension = activity_file_name.split(".")[-1]
             clean_name = f"{name_part}.{extension}"
         else:
             clean_name = activity_file_name
 
+        # 🔹 Remove duplicates
         if clean_name not in seen:
             seen.add(clean_name)
 
@@ -704,55 +653,58 @@ request.session['report_data'] = report_data
 
     alerts = []
 
+    # BUSINESS ALERTS
     if net_profit < 0:
         alerts.append({"type": "danger", "text": "Net loss detected"})
     elif net_profit > 0:
         alerts.append({"type": "success", "text": "Business is profitable"})
 
+    # GROWTH ALERT
     if growth_rate < 0:
         alerts.append({"type": "warning", "text": "Revenue dropped from last month"})
     elif growth_rate > 10:
         alerts.append({"type": "success", "text": f"Revenue increased by {round(growth_rate,2)}%"})
 
-    if df is not None and df.isnull().sum().sum() > 0:
-        alerts.append({"type": "warning", "text": "Dataset contains missing values"})
-# =========================
-# CONTEXT
-# =========================
-context = {
-    'user': user,
-    'greeting': greeting,
-    'data_preview': data_preview,
-    'columns': columns,
-    'total_revenue': total_revenue,
-    'total_expense': total_expense,
-    'total_tax': total_tax,
-    'net_profit': net_profit,
-    'growth_rate': round(growth_rate, 2),
-    'growth_text': growth_text,
-    'file_name': file_name,
-    'upload_time': upload_time,
-    'upload_success_message': upload_success_message,
-    'show_upload_section': show_upload_section,
-    'temporary_dataset': temporary_dataset,
-    'sales_over_time': json.dumps(sales_over_time),
-    'top_products': json.dumps(top_products),
-    'category_data': json.dumps(category_data),
-    'tax_data': json.dumps(tax_data),
-    'insights': insights,
-    'analytics_insights': analytics_insights,
-    'activities': activities,
-    'ai_insights': ai_insights,
-    'chart_explanations': chart_explanations,
-    'summary': summary,
-    'prediction': prediction,
-    'future_predictions': future_predictions,
-}
+    # DATA ALERT
+    if df is not None:
+        if df.isnull().sum().sum() > 0:
+            alerts.append({"type": "warning", "text": "Dataset contains missing values"})
 
-context['alerts'] = alerts
+    # =========================
+    # CONTEXT
+    # =========================
+    context = {
+        'user': user,
+        'greeting': greeting,
+        'data_preview': data_preview,
+        'columns': columns,
+        'total_revenue': total_revenue,
+        'total_expense': total_expense,
+        'total_tax': total_tax,
+        'net_profit': net_profit,
+        'growth_rate': round(growth_rate, 2),
+        'growth_text': growth_text,
+        'file_name': file_name,
+        'upload_time': upload_time,
+        'upload_success_message': upload_success_message,
+        'show_upload_section': show_upload_section,
+        'temporary_dataset': temporary_dataset,
+        'sales_over_time': json.dumps(sales_over_time),
+        'top_products': json.dumps(top_products),
+        'category_data': json.dumps(category_data),
+        'tax_data': json.dumps(tax_data),
+        'insights': insights,
+        'analytics_insights': analytics_insights,
+        'activities': activities,
+        'ai_insights': ai_insights,
+        'chart_explanations': chart_explanations,
+        'summary': summary,
+        'prediction': prediction,
+        'future_predictions': future_predictions,
 
-return render(request, 'dashboard/dashboard.html', context)
-    
+    }
+    context['alerts'] = alerts
+    return render(request, 'dashboard/dashboard.html', context)
 # =========================
 # PDF DOWNLOAD VIEW (ADDED)
 # =========================
@@ -900,7 +852,7 @@ def reports(request):
 
     ai_insights = ensure_three_ai_insights(
         request.session.get('ai_insights'),
-        request.session.get('report_data')
+        None,
     )
 
     context = {
@@ -939,6 +891,8 @@ def delete_dataset(request, dataset_id):
 
     dataset.delete()
     return redirect('dashboard')
+
+
 def load_dataset(request, dataset_id):
     dataset = get_object_or_404(UploadedDataset, id=dataset_id, user=request.user)
 
