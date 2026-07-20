@@ -3,14 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-def login_view(request):
-    return HttpResponse("Login Page")
 
-def signup_view(request):
-    return HttpResponse("Signup Page")
-
-def logout_view(request):
-    return HttpResponse("Logout Page")
 
 #signuplogic
 def signup_view(request):
