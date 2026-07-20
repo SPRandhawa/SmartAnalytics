@@ -35,7 +35,7 @@ def contact(request):
 def documentation(request):
     return render(request, 'pages/documentation.html')
 
-def help(request):
+def help_page(request):
     return render(request, 'pages/help.html')
 
 def blog(request):
