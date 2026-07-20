@@ -2,6 +2,7 @@ import pandas as pd
 from django.shortcuts import render
 from django.contrib import messages
 from .models import UploadedFile
+from django.contrib.auth.decorators import login_required
 
 def upload_data(request):
     data_preview = None
@@ -27,9 +28,9 @@ def upload_data(request):
                     messages.error(request, "Unsupported file format ❌", extra_tags="upload")
                     return render(request, "upload/upload.html")
 
-                # LIMIT DATA (IMPORTANT FOR PERFORMANCE)
-                    data_preview = df.head(10).values.tolist()
-                    columns = list(df.columns)
+                # ✅ CORRECT POSITION
+                data_preview = df.head(10).values.tolist()
+                columns = list(df.columns)
 
                 messages.success(request, "File processed successfully ✅", extra_tags="upload")
 
