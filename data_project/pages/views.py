@@ -39,7 +39,7 @@ def documentation(request):
     return render(request, 'pages/documentation.html')
 
 def help_page(request):
-    return render(request, 'pages/help.html')
+    return render(request, 'pages/help_page.html')
 
 def blog(request):
     return render(request, 'pages/blog.html')
