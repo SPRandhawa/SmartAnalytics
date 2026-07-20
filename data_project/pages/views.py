@@ -20,7 +20,10 @@ def contact(request):
         email = request.POST.get('email')
         message = request.POST.get('message')
 
-        # SAVE DATA TO DATABASE
+        if not name or not email or not message:
+            messages.error(request, "All fields are required")
+            return redirect('contact')
+
         ContactMessage.objects.create(
             name=name,
             email=email,
@@ -28,7 +31,7 @@ def contact(request):
         )
 
         messages.success(request, "Message sent successfully!")
-        return redirect('contact')  # reload page
+        return redirect('contact')
     
     return render(request, 'pages/contact.html')
 
