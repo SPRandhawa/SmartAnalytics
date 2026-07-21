@@ -85,6 +85,7 @@ SmartAnalytics allows users to:
 
 ---
 ## Flowchart
+```mermaid
 flowchart TD
 
     A[Start] --> B[Landing Page Home]
@@ -144,5 +145,5 @@ flowchart TD
     style R fill:#22c55e,color:#fff
     style S fill:#3b82f6,color:#fff
     style T fill:#ef4444,color:#fff
-
+```
 
